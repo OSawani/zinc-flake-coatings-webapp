@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1' ]
+ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1',]
 
 
 # Application definition
@@ -135,16 +135,18 @@ STATIC_URL = '/static/'
 # This sets the base URL for serving static files in the application.
 # Static files will be accessible at http://domain.com/static/filename
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-# List of directories where Django will search for additional static files
-# os.path.join(BASE_DIR, 'static') constructs an absolute path to the 'static' directory within the project.
-# This directory is where project's static files are placed (CSS, JavaScript, images, etc.).
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Directory where static files will be collected to when 'collectstatic' management command is run.
 # os.path.join(BASE_DIR, 'staticfiles') constructs an absolute path to the 'staticfiles' directory within project.
 # This directory is used in production to serve static files from a single location.
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# List of directories where Django will search for additional static files
+# os.path.join(BASE_DIR, 'static') constructs an absolute path to the 'static' directory within the project.
+# This directory is where project's static files are placed (CSS, JavaScript, images, etc.).
+
+# Static files storage
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
