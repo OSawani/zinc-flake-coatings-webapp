@@ -30,6 +30,7 @@ class Subsection(models.Model):
 
 class ContentVersion(models.Model):
     subsection = models.ForeignKey(Subsection, on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, blank=True, null=True)
     version_number = models.IntegerField()
     content = models.TextField()
     author = models.ForeignKey('core.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='published_versions')
