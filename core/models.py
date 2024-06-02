@@ -17,7 +17,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     is_approved = models.BooleanField(default=False)
-    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True, related_name='employees')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
