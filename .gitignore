@@ -11,3 +11,6 @@ __pycache__/
 db.sqlite3
 media/
 staticfiles/
+
+#Ignore environment variables
+env.py
