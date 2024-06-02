@@ -94,6 +94,9 @@ DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
 }
 
+# Custom user model setting
+AUTH_USER_MODEL = 'core.User'
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
