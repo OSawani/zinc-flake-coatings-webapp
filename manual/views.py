@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Section, Subsection, ContentVersion
+from .models import Section, Subsection
 
 
 # Create your views here.
 def section_list(request):
     sections = Section.objects.all()
-    return render(request, 'manual/section_list.html', {'sections': sections})
+    for section in sections:
+        section.subsections = Subsection.objects.filter(section=section)
+    return render(request, 'manual/section_list.html',
+                      {'sections': sections})
 
 
 def subsection_list(request, section_id):

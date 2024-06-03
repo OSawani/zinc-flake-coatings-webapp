@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1',]
 
@@ -63,8 +63,7 @@ ROOT_URLCONF = 'znflCoatingsManual.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,6 +133,40 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # This sets the base URL for serving static files in the application.
 # Static files will be accessible at http://domain.com/static/filename
+
+# Summernote configuration
+SUMMERNOTE_CONFIG = {
+    'iframe': True,
+    'summernote': {
+        'airMode': False,
+        'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+        ],
+    },
+    'codemirror': {
+        'mode': 'htmlmixed',
+        'lineNumbers': 'true',
+        'theme': 'monokai',
+    },
+    'attachment_absolute_uri': True,
+    'styleWithSpan': False,
+    'cleaner': {
+        'allowedTags': ['section', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'blockquote', 'pre', 'b', 'i', 'u', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'ul', 'ol', 'li', 'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'a', 'img'],
+        'allowedAttributes': ['href', 'src', 'style', 'class', 'id', 'name', 'alt', 'title', 'target'],
+        'selfClosing': ['img', 'hr', 'br'],
+        'blockElements': ['div', 'section', 'table', 'ul', 'ol', 'blockquote'],
+        'returnFormat': 'html',  # Use 'html' instead of 'xhtml'
+    },
+}
+
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Directory where static files will be collected to when 'collectstatic' management command is run.
