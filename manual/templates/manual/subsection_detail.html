@@ -13,4 +13,21 @@
     <h2>{{ subsection.title }}</h2>
     <p>{{ subsection.content|safe }}</p>
 </div>
+
+<div class="mt-5">
+    <h3>Comments</h3>
+    <ul class="list-group mb-3">
+        {% for comment in comments %}
+        <li class="list-group-item">{{ comment.user.username }}: {{ comment.content }}</li>
+        {% endfor %}
+    </ul>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="comment" class="form-label">Add a Comment</label>
+            <textarea class="form-control" id="comment" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 {% endblock %}
