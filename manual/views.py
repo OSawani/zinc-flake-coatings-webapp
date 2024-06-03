@@ -27,7 +27,7 @@ def subsection_detail(request, subsection_id):
     comment_count = subsection.comments.filter(approved=True).count()
 
     if request.method == 'POST':
-        form = CommentForm(data=request.POST)
+        form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.user = request.user
@@ -36,8 +36,8 @@ def subsection_detail(request, subsection_id):
             messages.add_message(request, messages.SUCCESS,
                                  'Your comment has been added')
             return redirect('subsection_detail', subsection_id=subsection.id)
-
-    form = CommentForm()
+    else:
+        form = CommentForm()
     return render(request, 'manual/subsection_detail.html',
                   {
                       'subsection': subsection,
