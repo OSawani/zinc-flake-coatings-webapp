@@ -21,6 +21,6 @@ def subsection_list(request, section_id):
 
 def subsection_detail(request, subsection_id):
     subsection = get_object_or_404(Subsection, id=subsection_id)
-    comments = subsection.comment_set.all()
+    comments = subsection.comments.all()
     return render(request, 'manual/subsection_detail.html',
                   {'subsection': subsection, 'comments': comments})

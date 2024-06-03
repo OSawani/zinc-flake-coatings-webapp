@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}{{ subsection.title }}{% endblock %}
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'section_list' %}">Section</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ subsection.title }}</li>
+    </ol>
+</nav>
+
+<div class="content-section">
+    <h2>{{ subsection.title }}</h2>
+    <p>{{ subsection.content|safe }}</p>
+</div>
+{% endblock %}
