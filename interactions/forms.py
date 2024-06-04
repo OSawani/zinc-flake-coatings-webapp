@@ -11,6 +11,3 @@ class CommentForm(forms.ModelForm):
                 attrs={'rows': 3, 'class': 'form-control', 'required': True,
                        'placeholder': 'Add a Comment'}),
         }
-        labels = {
-            'content': 'Do you have any constructive feedback? Add a Comment',
-        }

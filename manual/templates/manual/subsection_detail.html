@@ -19,18 +19,24 @@
     {% if comments.exists %}
         <ul class="list-group mb-3">
             {% for comment in comments %}
-            <li class="list-group-item">{{ comment.content }} - <em>{{ comment.user.username }}</em> on {{ comment.created_at }}</li>
+            <li class="list-group-item">
+                {{ comment.content }} - <em>{{ comment.user.username }}</em> on {{ comment.created_at }}
+                {% if comment.user == request.user %}
+                    <div class="btn-group float-end" role="group">
+                        <a href="{% url 'edit_comment' comment.id %}" class="btn btn-secondary btn-sm">Edit</a>
+                    </div>
+                {% endif %}
+            </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>No comments yet.</p>
     {% endif %}
 
-    <h3>Add a Comment</h3>
+    <h3>Do you have any constructive feedback?</h3>
     <form method="post">
         {% csrf_token %}
         <div class="mb-3">
-            {{ form.content.label_tag }}  <!-- Label for the textarea -->
             {{ form.content }}  <!-- Textarea field -->
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
