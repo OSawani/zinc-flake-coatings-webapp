@@ -24,6 +24,7 @@
                 {% if comment.user == request.user %}
                     <div class="btn-group float-end" role="group">
                         <a href="{% url 'edit_comment' comment.id %}" class="btn btn-secondary btn-sm">Edit</a>
+                        <a href="{% url 'delete_comment' comment.id %}" class="btn btn-danger btn-sm">Delete</a>
                     </div>
                 {% endif %}
             </li>

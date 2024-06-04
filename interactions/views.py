@@ -24,3 +24,15 @@ def edit_comment(request, comment_id):
         form = CommentForm(instance=comment)
     return render(request, 'interactions/edit_comment.html',
                   {'form': form, 'comment': comment})
+
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id, user=request.user)
+    if request.method == 'POST':
+        subsection_id = comment.subsection.id
+        comment.delete()
+        return redirect(
+            'subsection_detail', subsection_id=comment.subsection.id)
+    return render(request, 'interactions/delete_comment.html',
+                  {'comment': comment})
