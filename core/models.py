@@ -13,6 +13,7 @@ class Company(models.Model):
 
 
 class User(AbstractUser):
+    username = None # Remove the username field. Use email as the username field
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
@@ -35,6 +36,9 @@ class User(AbstractUser):
         help_text='Specific permissions for this user.',
         related_query_name='user',
     )
+
+    USERNAME_FIELD = 'email' # Use email as unique identifier
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):
         return self.email

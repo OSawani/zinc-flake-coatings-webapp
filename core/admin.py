@@ -17,4 +17,5 @@ class CustomUserAdmin(UserAdmin):
                     'is_approved']
     search_fields = ['email', 'first_name', 'last_name']
     list_filter = ['company', 'is_approved']
+    ordering = ['company']
 
