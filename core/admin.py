@@ -19,3 +19,15 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ['company', 'is_approved']
     ordering = ['company']
 
+    # Remove username field and use email as the unique identifier
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'company')}),
+        ('Permissions', {
+            'fields': ('is_active', 'is_staff', 'is_superuser',
+                       'groups', 'user_permissions')
+        }),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+        ('Approval', {'fields': ('is_approved',)}),
+    )
+

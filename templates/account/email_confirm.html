@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block head_title %}Confirm E-mail Address{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Confirm E-mail Address</h1>
+    <p>Click the button below to confirm your email address.</p>
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit">Confirm E-mail</button>
+    </form>
+</div>
+{% endblock %}

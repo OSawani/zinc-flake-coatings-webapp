@@ -13,12 +13,25 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+
 if os.path.isfile('env.py'):
     import env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+# List of directories where Django will search for additional static files
+# os.path.join(BASE_DIR, 'static') constructs an absolute path to the
+# 'static' directory within the project. This directory is where project's
+# static files are placed (CSS, JavaScript, images, etc.).
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Directory where static files will be collected to when 'collectstatic'
+# management command is run. os.path.join(BASE_DIR, 'staticfiles')
+# constructs an absolute path to the 'staticfiles' directory within project.
+# This directory is used in production to serve static files from a single
+# location.
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,12 +43,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1',]
-
+ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', ]
 
 # Application definition
 
 INSTALLED_APPS = [
+    'allauth',
+    'allauth.account',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,9 +57,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',  # Required by allauth
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     'django_summernote',
     'core',
     'manual',
@@ -54,26 +65,11 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware', # Required by allauth
-]
-
-#Authentication settings
-AUTHENTICATION_BACKENDS = (
+# Authentication settings
+AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-)
+]
 
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True
@@ -82,22 +78,42 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "[Zinc-Flake Coatings Manual]"
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# Custom signup form
+ACCOUNT_FORMS = {
+    'signup': 'core.forms.CustomSignupForm',
+}
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp-mail.outlook.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.environ.get('APP_PW')
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
-
 
 ROOT_URLCONF = 'znflCoatingsManual.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -112,16 +128,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'znflCoatingsManual.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-#DATABASES = {
+# DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
 #        'NAME': BASE_DIR / 'db.sqlite3',
 #    }
-#}
+# }
 
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
@@ -135,19 +150,22 @@ AUTH_USER_MODEL = 'core.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation'
+                '.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -159,7 +177,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -192,25 +209,18 @@ SUMMERNOTE_CONFIG = {
     'attachment_absolute_uri': True,
     'styleWithSpan': False,
     'cleaner': {
-        'allowedTags': ['section', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'blockquote', 'pre', 'b', 'i', 'u', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'ul', 'ol', 'li', 'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'a', 'img'],
-        'allowedAttributes': ['href', 'src', 'style', 'class', 'id', 'name', 'alt', 'title', 'target'],
+        'allowedTags': ['section', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+                        'p', 'span', 'blockquote', 'pre', 'b', 'i', 'u',
+                        'strong', 'em', 'strike', 'code', 'hr', 'br', 'ul',
+                        'ol', 'li', 'table', 'thead', 'caption', 'tbody', 'tr',
+                        'th', 'td', 'a', 'img'],
+        'allowedAttributes': ['href', 'src', 'style', 'class', 'id', 'name',
+                              'alt', 'title', 'target'],
         'selfClosing': ['img', 'hr', 'br'],
         'blockElements': ['div', 'section', 'table', 'ul', 'ol', 'blockquote'],
         'returnFormat': 'html',  # Use 'html' instead of 'xhtml'
     },
 }
-
-
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# Directory where static files will be collected to when 'collectstatic' management command is run.
-# os.path.join(BASE_DIR, 'staticfiles') constructs an absolute path to the 'staticfiles' directory within project.
-# This directory is used in production to serve static files from a single location.
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-# List of directories where Django will search for additional static files
-# os.path.join(BASE_DIR, 'static') constructs an absolute path to the 'static' directory within the project.
-# This directory is where project's static files are placed (CSS, JavaScript, images, etc.).
 
 # Static files storage
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

@@ -1,9 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from allauth.account.forms import SignupForm
 from .models import User, Company
 
 
-class UserRegistrationForm(UserCreationForm):
+class CustomSignupForm(SignupForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
@@ -13,19 +13,11 @@ class UserRegistrationForm(UserCreationForm):
         empty_label='Select a company'
     )
 
-    class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email', 'password1', 'password2',
-                  'company']
-
-    def save(self, commit=True):
-        user = super(UserRegistrationForm, self).save(commit=False)
-        # Set the username to the email (Email is unique)
-        user.username = self.cleaned_data['email']
-        if commit:
-            user.save()
+    def save(self, request):
+        user = super(CustomSignupForm, self).save(request)
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.company = self.cleaned_data['company']
+        user.save()
         return user
-
-
-class UserLoginForm(AuthenticationForm):
-    username = forms.EmailField(label='Email')
