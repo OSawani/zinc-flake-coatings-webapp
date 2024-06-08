@@ -1,5 +1,7 @@
+import os
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.mail import send_mail
 
 
 # Create your models here.
@@ -13,7 +15,8 @@ class Company(models.Model):
 
 
 class User(AbstractUser):
-    username = None # Remove the username field. Use email as the username field
+    username = None # Remove the username field.
+    # Use email as the username field
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
@@ -26,7 +29,8 @@ class User(AbstractUser):
         'auth.Group',
         related_name='custom_user_set',  # Unique related_name
         blank=True,
-        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+        help_text='The groups this user belongs to. A user will get all '
+                  'permissions granted to each of their groups.',
         related_query_name='user',
     )
     user_permissions = models.ManyToManyField(
@@ -42,3 +46,14 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+    def send_approval_email(self):
+        subject = 'Account Approved'
+        message = ('Your account has been approved. You can now log in and '
+                   'start writing comments and adding content to your '
+                   'favorites.')
+        send_mail(
+            subject,
+            message,
+            os.environ.get('EMAIL_HOST_USER'),
+            [self.email])
