@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Email Not Verified - Zinc-Flake Coatings Manual{% endblock %}
+{% block content %}
+<main class="container mt-5">
+    <div class="content-section">
+        <h2>Email Not Verified</h2>
+        <p>Please verify your email to leave a comment. <a href="{% url 'account_email' %}">Request verification</a></p>
+    </div>
+</main>
+{% endblock %}

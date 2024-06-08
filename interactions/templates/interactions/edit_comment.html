@@ -6,6 +6,5 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">Save changes</button>
-    <a href="{% url 'subsection_detail' comment.subsection.id %}" class="btn btn-secondary">Cancel</a>
 </form>
 {% endblock %}
