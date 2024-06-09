@@ -51,7 +51,7 @@ class User(AbstractUser):
         subject = 'Account Approved'
         message = ('Your account has been approved. You can now log in and '
                    'start writing comments and adding content to your '
-                   'favorites.')
+                   'favourites.')
         send_mail(
             subject,
             message,

@@ -95,13 +95,13 @@ def add_favourite(request, content_type, content_id):
     if existing_favourite:
         existing_favourite.delete()
         messages.success(request, f'Removed "{content_name}" from your '
-                                  f'favorites.')
+                                  f'favourites.')
     else:
         if content_type == 'section':
             Favourite.objects.create(user=user, section=content)
         else:
             Favourite.objects.create(user=user, subsection=content)
-        messages.success(request, f'Added "{content_name}" to your favorites.')
+        messages.success(request, f'Added "{content_name}" to your favourites.')
 
     return redirect(request.META.get('HTTP_REFERER',
                                      'redirect_if_referer_not_found'))
@@ -117,3 +117,22 @@ def list_favourites(request):
         'favourite_subsections': favourite_subsections
     }
     return render(request, 'interactions/favourites_list.html', context)
+
+
+def dashboard(request):
+    user = request.user
+    favourite_sections = Favourite.objects.filter(user=user,
+                                                  section__isnull=False)
+    favourite_subsections = Favourite.objects.filter(user=user,
+                                                     subsection__isnull=False)
+    comments = user.comment_set.all()
+    sections = Section.objects.all()
+
+
+    return render(request, 'interactions/dashboard.html', {
+        'user': user,
+        'favourite_sections': favourite_sections,
+        'favourite_subsections': favourite_subsections,
+        'comments': comments,
+        'sections': sections,
+    })

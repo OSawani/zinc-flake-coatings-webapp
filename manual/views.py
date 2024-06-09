@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from .models import Section, Subsection
 from interactions.models import Favourite
 from interactions.forms import CommentForm
@@ -52,14 +52,14 @@ def subsection_detail(request, subsection_id):
         email_verified = EmailAddress.objects.filter(user=request.user,
                                                      verified=True).exists()
 
-    # Determine if the subsection and section are favorites
+    # Determine if the subsection and section are favourites
     is_favourite_subsection = False
     is_favourite_section = False
     if request.user.is_authenticated:
         is_favourite_subsection = Favourite.objects.filter(
             user=request.user, subsection=subsection).exists()
         is_favourite_section = Favourite.objects.filter(
-            user=request.user,section=subsection.section).exists()
+            user=request.user, section=subsection.section).exists()
 
     form = CommentForm()
     return render(request, 'manual/subsection_detail.html',
@@ -72,3 +72,12 @@ def subsection_detail(request, subsection_id):
                       'is_favourite_subsection': is_favourite_subsection,
                       'is_favourite_section': is_favourite_section,
                   })
+
+
+def section_detail(request, section_id):
+    section = get_object_or_404(Section, id=section_id)
+    subsections = Subsection.objects.filter(section=section)
+    return render(request, 'manual/section_detail.html', {
+        'section': section,
+        'subsections': subsections,
+    })

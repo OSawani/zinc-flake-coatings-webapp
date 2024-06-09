@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Zinc-Flake Coatings Manual{% endblock %}
+{% block content %}
+<main class="container mt-5">
+    <div class="row">
+        <!-- Navigation Sidebar -->
+        <div class="col-md-3">
+            <h2>Navigation</h2>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="#" data-bs-toggle="modal" data-bs-target="#manualIndexModal">Manual Index</a></li>
+                <li class="list-group-item"><a href="#favourites">My Favourites</a></li>
+                <li class="list-group-item"><a href="#comments">My Comments</a></li>
+            </ul>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div id="dashboard-content" class="col-md-9">
+            <h2>Welcome, {{ user.first_name }}</h2>
+            <p>Here you can manage your favourites, comments, and browse content.</p>
+
+            <!-- Manual Index Modal Trigger -->
+            <div class="mt-5">
+                <h3>Manual Index</h3>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#manualIndexModal">View Manual Index</button>
+            </div>
+
+            <!-- Favourites Section -->
+            <div id="favourites" class="mt-5">
+                <h3>My Favourites</h3>
+                {% if favourite_sections or favourite_subsections %}
+                    <div class="accordion" id="favouritesAccordion">
+                        {% if favourite_sections %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingSections">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSections" aria-expanded="true" aria-controls="collapseSections">
+                                    Favourite Sections
+                                </button>
+                            </h2>
+                            <div id="collapseSections" class="accordion-collapse collapse show" aria-labelledby="headingSections" data-bs-parent="#favouritesAccordion">
+                                <div class="accordion-body">
+                                    <ul class="list-group">
+                                        {% for favourite in favourite_sections %}
+                                        <li class="list-group-item"><a href="{{ favourite.section.get_absolute_url }}">{{ favourite.section.title }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if favourite_subsections %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingSubsections">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubsections" aria-expanded="false" aria-controls="collapseSubsections">
+                                    Favourite Subsections
+                                </button>
+                            </h2>
+                            <div id="collapseSubsections" class="accordion-collapse collapse" aria-labelledby="headingSubsections" data-bs-parent="#favouritesAccordion">
+                                <div class="accordion-body">
+                                    <ul class="list-group">
+                                        {% for favourite in favourite_subsections %}
+                                        <li class="list-group-item"><a href="{{ favourite.subsection.get_absolute_url }}">{{ favourite.subsection.title }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                <p>You have no favourites.</p>
+                {% endif %}
+            </div>
+
+            <!-- Comments Section -->
+            <div id="comments" class="mt-5">
+                <h3>My Comments</h3>
+                {% if comments %}
+                <ul class="list-group">
+                    {% for comment in comments %}
+                    <li class="list-group-item">Comment on <a href="{{ comment.subsection.get_absolute_url }}">{{ comment.subsection.title }}</a>: "{{ comment.content }}"</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>You have no comments.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Manual Index Modal -->
+<div class="modal fade" id="manualIndexModal" tabindex="-1" aria-labelledby="manualIndexModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="manualIndexModalLabel">Manual Index</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    {% for section in sections %}
+                    <li class="list-group-item"><a href="{% url 'section_detail' section.id %}">{{ section.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

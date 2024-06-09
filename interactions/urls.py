@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('comments/', views.comment_list, name='comment_list'),
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('comments/add/<int:subsection_id>/',
          views.add_comment, name='add_comment'),
     path(

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django_summernote.fields import SummernoteTextField
 from core.models import User
 
@@ -14,6 +15,9 @@ class Section(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('section_detail', args=[self.id])
+
 
 class Subsection(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name='sub_sections')
@@ -26,6 +30,9 @@ class Subsection(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('subsection_detail', args=[self.id])
 
 
 class ContentVersion(models.Model):

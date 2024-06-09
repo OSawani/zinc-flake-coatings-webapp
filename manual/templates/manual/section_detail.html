@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
-{% block title %}Subsections{% endblock %}
+{% block title %}{{ section.title }} - Zinc-Flake Coatings Manual{% endblock %}
 {% block content %}
-<main>
-    <h2>Subsections of {{ section.title }}</h2>
-
-    {% if subsections %}
+<main class="container mt-5">
+    <h2>{{ section.title }}</h2>
+    <p>{{ section.description|safe }}</p>
     <div class="accordion" id="subsectionsAccordion">
         {% for subsection in subsections %}
         <div class="accordion-item">
@@ -15,11 +14,6 @@
             </h2>
             <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#subsectionsAccordion">
                 <div class="accordion-body">
-                    <div class="mt-3">
-                        <a href="{% url 'add_favourite' 'subsection' subsection.id %}" class="btn btn-outline-primary">
-                            {% if subsection.id in favourite_subsections %}Remove from Favourites{% else %}Add to Favourites{% endif %}
-                        </a>
-                    </div>
                     <p>{{ subsection.content|safe }}</p>
                     <a href="{% url 'subsection_detail' subsection.id %}" class="btn btn-primary">View Details</a>
                 </div>
@@ -27,13 +21,5 @@
         </div>
         {% endfor %}
     </div>
-    {% else %}
-    <div class="mt-3">
-        <p>{{ section.description|safe }}</p>
-        <a href="{% url 'add_favourite' 'section' section.id %}" class="btn btn-outline-primary">
-            {% if section.id in favourite_sections %}Remove from Favourites{% else %}Add to Favourites{% endif %}
-        </a>
-    </div>
-    {% endif %}
 </main>
 {% endblock %}

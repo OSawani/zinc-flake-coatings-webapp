@@ -9,7 +9,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 @admin.register(Favourite)
-class FavoriteAdmin(admin.ModelAdmin):
+class FavouriteAdmin(admin.ModelAdmin):
     list_display = ('user', 'section', 'subsection', 'updated_at')
 
 
