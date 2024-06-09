@@ -11,4 +11,7 @@ urlpatterns = [
         name='edit_comment'),
     path('comment/delete/<int:comment_id>/',
          views.delete_comment, name='delete_comment'),
+    path('favourites/', views.list_favourites, name='favourite_list'),
+    path('favourites/add/<str:content_type>/<int:content_id>/',
+         views.add_favourite, name='add_favourite'),
 ]

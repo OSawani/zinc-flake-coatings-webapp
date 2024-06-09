@@ -11,12 +11,22 @@
 
 <div class="content-section">
     <h2>{{ subsection.title }}</h2>
+    <div class="mt-3">
+        <a href="{% url 'add_favourite' 'subsection' subsection.id %}" class="btn btn-outline-primary">
+            {% if is_favourite_subsection %}Remove from Favorites{% else %}Add to Favorites{% endif %}
+        </a>
+    </div>
     <p>{{ subsection.content|safe }}</p>
 </div>
 
 <!-- Comments section !-->
 <div class="mt-5">
-    <h3>Comments ({{ comment_count }})</h3>
+    <div class="d-flex align-items-center mb-3">
+        <a href="{% url 'add_favourite' 'subsection' subsection.id %}" class="me-2">
+            <i class="fas fa-thumbs-up"></i> <span>{{ subsection.favourites.count }}</span>
+        </a>
+        <h3 class="m-0">Comments ({{ comment_count }})</h3>
+    </div>
     {% if comments.exists %}
         <ul class="list-group mb-3">
             {% for comment in comments %}
@@ -52,4 +62,5 @@
             <p><a href="{% url 'account_login' %}">Log in</a> to leave a comment.</p>
         {% endif %}
 </div>
+
 {% endblock %}

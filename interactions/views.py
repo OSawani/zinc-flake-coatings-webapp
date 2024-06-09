@@ -2,9 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from allauth.account.models import EmailAddress
-from .models import Comment
+from .models import Comment, Favourite
 from .forms import CommentForm
-from manual.models import Subsection
+from manual.models import Section, Subsection
 
 
 # Create your views here.
@@ -16,7 +16,8 @@ def comment_list(request):
 
 def add_comment(request, subsection_id):
     subsection = get_object_or_404(Subsection, id=subsection_id)
-    email_verified = EmailAddress.objects.filter(user=request.user, verified=True).exists()
+    email_verified = EmailAddress.objects.filter(user=request.user,
+                                                 verified=True).exists()
 
     if not email_verified:
         return render(request,
@@ -49,11 +50,11 @@ def edit_comment(request, comment_id):
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.approved = True # Will change to False if
+            comment.approved = True  # Will change to False if
             # admin approval is needed in the future
             form.save()
-            messages.add_message(request, messages.SUCCESS,'Comment updated '
-                                                           'successfully')
+            messages.add_message(request, messages.SUCCESS, 'Comment updated '
+                                                            'successfully')
             return redirect(
                 'subsection_detail', subsection_id=comment.subsection.id)
     else:
@@ -73,3 +74,46 @@ def delete_comment(request, comment_id):
             'subsection_detail', subsection_id=comment.subsection.id)
     return render(request, 'interactions/delete_comment.html',
                   {'comment': comment})
+
+
+@login_required
+def add_favourite(request, content_type, content_id):
+    user = request.user
+    content_name = ''  # initialise to fix bug UnboundLocalError at
+    # /interactions/favourites/add/subsection/1/ cannot access local
+    # variable 'content_name' where it is not associated with a value
+    if content_type == 'section':
+        content = get_object_or_404(Section, id=content_id)
+        content_name = content.title
+        existing_favourite = Favourite.objects.filter(user=user,
+                                                      section=content).first()
+    else:
+        content = get_object_or_404(Subsection, id=content_id)
+        existing_favourite = Favourite.objects.filter(user=user,
+                                                      subsection=content).first()
+
+    if existing_favourite:
+        existing_favourite.delete()
+        messages.success(request, f'Removed "{content_name}" from your '
+                                  f'favorites.')
+    else:
+        if content_type == 'section':
+            Favourite.objects.create(user=user, section=content)
+        else:
+            Favourite.objects.create(user=user, subsection=content)
+        messages.success(request, f'Added "{content_name}" to your favorites.')
+
+    return redirect(request.META.get('HTTP_REFERER',
+                                     'redirect_if_referer_not_found'))
+
+
+@login_required
+def list_favourites(request):
+    user = request.user
+    favourite_sections = user.favourites.filter(section__isnull=False)
+    favourite_subsections = user.favourites.filter(subsection__isnull=False)
+    context = {
+        'favourite_sections': favourite_sections,
+        'favourite_subsections': favourite_subsections
+    }
+    return render(request, 'interactions/favourites_list.html', context)

@@ -12,6 +12,11 @@
         </h2>
         <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#subsectionsAccordion">
             <div class="accordion-body">
+                <div class="mt-3">
+                    <a href="{% url 'add_favourite' 'subsection' subsection.id %}" class="btn btn-outline-primary">
+                        {% if subsection.id in favourite_subsections %}Remove from Favorites{% else %}Add to Favorites{% endif %}
+                    </a>
+                </div>
                 <p>{{ subsection.content|safe }}</p>
                 <a href="{% url 'subsection_detail' subsection.id %}" class="btn btn-primary">View Details</a>
             </div>

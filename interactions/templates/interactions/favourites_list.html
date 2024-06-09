@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}My Favorites - Zinc-Flake Coatings Manual{% endblock %}
+{% block content %}
+<main class="container mt-5">
+    <div class="content-section">
+        <h2>My Favorites</h2>
+        <h3>Section Favorites</h3>
+        <ul class="list-group">
+            {% for favourite in favourite_sections %}
+            <li class="list-group-item">
+                <a href="{% url 'subsection_list' favourite.section.id %}">{{ favourite.section.title }}</a>
+                <a href="{% url 'add_favourite' 'section' favourite.section.id %}" class="btn btn-sm btn-outline-danger">Remove</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <h3>Subsection Favorites</h3>
+        <ul class="list-group">
+            {% for favourite in favourite_subsections %}
+            <li class="list-group-item">
+                <a href="{% url 'subsection_detail' favourite.subsection.id %}">{{ favourite.subsection.title }}</a>
+                <a href="{% url 'add_favourite' 'subsection' favourite.subsection.id %}" class="btn btn-sm btn-outline-danger">Remove</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</main>
+{% endblock %}
