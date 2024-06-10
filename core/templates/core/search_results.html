@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load highlight %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+    <h2>Search Results for "{{ query }}"</h2>
+    {% if page_obj.has_other_pages %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?q={{ query }}&page=1">&laquo; first</a>
+                    <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?q={{ query }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+    <ul class="search-results">
+        {% for result in page_obj %}
+            <li class="search-result-item">
+                <a href="{{ result.get_absolute_url }}">{{ result.title|highlight:query }}</a>
+                {% if result.description %}
+                    <p>{{ result.description|contextual_highlight:query|safe }}</p>
+                {% endif %}
+                {% if result.content %}
+                    <p>{{ result.content|contextual_highlight:query|safe }}</p>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% if not page_obj %}
+        <p>No results found.</p>
+    {% endif %}
+{% endblock %}

@@ -44,16 +44,17 @@
                         <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
                     </li>
                     {% endif %}
-                    <li class="nav-item">
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-light">EN</button>
-                            <button type="button" class="btn btn-light">DE</button>
-                        </div>
-                    </li>
                 </ul>
             </div>
         </div>
     </nav>
+    
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <form action="{% url 'search_results' %}" method="get">
+            <input type="search" name="q" placeholder="Search..." aria-label="Search">
+        </form>
+    </div>
     
     <!-- Display Messages -->
     {% if messages %}
