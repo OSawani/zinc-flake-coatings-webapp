@@ -29,20 +29,28 @@ class Command(BaseCommand):
                     }
                 )
 
-                for subsection_data in section_data['subsections']:
-                    subsection_author = User.objects.get(
-                        email=subsection_data['author']) if subsection_data[
-                        'author'] else None
+                self.create_subsections(section, section_data['subsections'])
 
-                    Subsection.objects.get_or_create(
-                        section=section,
-                        title=subsection_data['title'],
-                        defaults={
-                            'content': subsection_data['content'],
-                            'author': subsection_author,
-                            'parent': None
-                            # Adjust if your JSON includes parent subsections
-                        }
-                    )
+            self.stdout.write(
+                self.style.SUCCESS('Content imported successfully'))
 
-        self.stdout.write(self.style.SUCCESS('Content imported successfully'))
+    def create_subsections(self, parent_section, subsections_data):
+        for subsection_data in subsections_data:
+            author = User.objects.get(email=subsection_data['author']) if \
+                subsection_data['author'] else None
+
+            subsection, created = Subsection.objects.get_or_create(
+                section=parent_section if isinstance(
+                    parent_section,Section) else parent_section.section,
+                title=subsection_data['title'],
+                defaults={
+                    'content': subsection_data['content'],
+                    'author': author,
+                    'parent': parent_section if isinstance(
+                        parent_section, Subsection) else None
+                }
+            )
+
+            # Recursively create nested subsections
+            self.create_subsections(subsection,
+                                    subsection_data['subsections'])

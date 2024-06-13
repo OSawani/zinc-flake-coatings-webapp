@@ -1,0 +1,36 @@
+[
+  {
+    "section": {
+      "title": "Product Information",
+      "description": "",
+      "author": "omarsawani@gmail.com",
+      "subsections": [
+        {
+          "title": "Product Groups",
+          "content": "<p>The product portfolio is divided into three different groups: basecoats, topcoats, and thinners.</p>",
+          "author": "omarsawani@gmail.com",
+          "subsections": [
+            {
+              "title": "Basecoats",
+              "content": "<p>The most important function of the basecoats is to provide the coated steel surface with active protection against corrosion. This protective action is based on the sacrificial characteristic of zinc which is present in all basecoats.</p><p><img src=\"/static/images/basecoats_placeholder.jpg\" alt=\"Basecoats Image\" class=\"img-responsive\"></p><table class=\"table table-bordered\"><thead><tr><th>Basecoat Type</th><th>Characteristics</th><th>Applications</th></tr></thead><tbody><tr><td>Zinc Flake</td><td>Provides sacrificial protection</td><td>Steel surfaces</td></tr><tr><td>Inorganic</td><td>High temperature resistance</td><td>Engine parts</td></tr></tbody></table>",
+              "author": "omarsawani@gmail.com",
+              "subsections": []
+            },
+            {
+              "title": "Topcoats",
+              "content": "<p>With a topcoat, various properties of the coating system can be achieved:</p><ul><li>Setting a defined coefficient of friction;</li><li>Sealing of surfaces;</li><li>Resistance to chemicals;</li><li>Abrasion resistance;</li><li>Color</li></ul><p>Applying a topcoat can significantly increase the durability of the underlying basecoat.</p><p><img src=\"/static/images/topcoats_placeholder.jpg\" alt=\"Topcoats Image\" class=\"img-responsive\"></p><table class=\"table table-bordered\"><thead><tr><th>Topcoat Type</th><th>Characteristics</th><th>Applications</th></tr></thead><tbody><tr><td>Sealants</td><td>Chemical resistance</td><td>Industrial machinery</td></tr><tr><td>Lubricants</td><td>Reduces friction</td><td>Moving parts</td></tr></tbody></table>",
+              "author": "omarsawani@gmail.com",
+              "subsections": []
+            },
+            {
+              "title": "Thinners",
+              "content": "<p>Thinners are used to adjust the viscosity of the coating material for optimal application. They ensure a smooth and even coat by reducing the thickness of the application.</p><p><img src=\"/static/images/thinners_placeholder.jpg\" alt=\"Thinners Image\" class=\"img-responsive\"></p>",
+              "author": "omarsawani@gmail.com",
+              "subsections": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+]
