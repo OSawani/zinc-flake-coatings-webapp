@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}{{ subsection.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/content_css/basecoat.css' %}">
+{% endblock %}
+
 {% block content %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -62,5 +69,10 @@
             <p><a href="{% url 'account_login' %}">Log in</a> to leave a comment.</p>
         {% endif %}
 </div>
+    
+{% block extra_js %}
+script:src="{% static 'js/content_js/basecoat.js' %}
+    
+{% endblock %}    
 
 {% endblock %}

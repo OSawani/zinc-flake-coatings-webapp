@@ -63,6 +63,8 @@ INSTALLED_APPS = [
     'interactions',
 ]
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'  # for iframe support in Summernote
+
 SITE_ID = 1
 
 # Authentication settings
@@ -185,7 +187,7 @@ STATIC_URL = '/static/'
 # This sets the base URL for serving static files in the application.
 # Static files will be accessible at http://domain.com/static/filename
 
-# Summernote configuration
+# Summernote settings
 SUMMERNOTE_CONFIG = {
     'iframe': True,
     'summernote': {
@@ -209,17 +211,32 @@ SUMMERNOTE_CONFIG = {
     'attachment_absolute_uri': True,
     'styleWithSpan': False,
     'cleaner': {
-        'allowedTags': ['section', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-                        'p', 'span', 'blockquote', 'pre', 'b', 'i', 'u',
-                        'strong', 'em', 'strike', 'code', 'hr', 'br', 'ul',
-                        'ol', 'li', 'table', 'thead', 'caption', 'tbody', 'tr',
-                        'th', 'td', 'a', 'img'],
-        'allowedAttributes': ['href', 'src', 'style', 'class', 'id', 'name',
-                              'alt', 'title', 'target'],
+        'allowedTags': [
+            'section', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p',
+            'span', 'blockquote', 'pre', 'b', 'i', 'u', 'strong', 'em',
+            'strike', 'code', 'hr', 'br', 'ul', 'ol', 'li', 'table',
+            'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'a', 'img'
+        ],
+        'allowedAttributes': {
+            '*': ['style', 'class', 'id', 'name', 'alt', 'title', 'target'],
+            'a': ['href'],
+            'img': ['src', 'alt', 'title', 'width', 'height'],
+        },
         'selfClosing': ['img', 'hr', 'br'],
         'blockElements': ['div', 'section', 'table', 'ul', 'ol', 'blockquote'],
-        'returnFormat': 'html',  # Use 'html' instead of 'xhtml'
+        'returnFormat': 'html',  # Ensure it's 'html'
     },
+    'css': (
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/theme/monokai.min'
+        '.css',
+    ),
+    'js': (
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/htmlmixed'
+        '/htmlmixed.min.js',
+    ),
 }
 
 # Static files storage
