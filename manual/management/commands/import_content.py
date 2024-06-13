@@ -1,5 +1,6 @@
 import json
 from django.core.management.base import BaseCommand
+from django.utils.html import escape
 from manual.models import Section, Subsection
 from core.models import User
 
@@ -39,12 +40,15 @@ class Command(BaseCommand):
             author = User.objects.get(email=subsection_data['author']) if \
                 subsection_data['author'] else None
 
+            # Escape HTML content to ensure it is stored correctly
+            content = escape(subsection_data['content'])
+
             subsection, created = Subsection.objects.get_or_create(
                 section=parent_section if isinstance(
                     parent_section,Section) else parent_section.section,
                 title=subsection_data['title'],
                 defaults={
-                    'content': subsection_data['content'],
+                    'content': content,
                     'author': author,
                     'parent': parent_section if isinstance(
                         parent_section, Subsection) else None
