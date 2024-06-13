@@ -21,20 +21,29 @@ def section_list(request):
                   )
 
 
+def get_flat_subsections(section):
+    subsections = Subsection.objects.filter(section=section).select_related('parent')
+    subsection_dict = {None: []}
+    for subsection in subsections:
+        parent_id = subsection.parent_id if subsection.parent else None
+        subsection_dict.setdefault(parent_id, []).append(subsection)
+    return subsection_dict
+
+
 def subsection_list(request, section_id):
     section = get_object_or_404(Section, id=section_id)
-    subsections = Subsection.objects.filter(section=section,
-                                            parent__isnull=True)
+    subsection_dict = get_flat_subsections(section)
     favourite_sections = Favourite.objects.filter(user=request.user,
                                                   section=section).values_list(
         'section_id', flat=True) if request.user.is_authenticated else []
-    favourite_subsections = Favourite.objects.filter(user=request.user,
-                                                     subsection__in=subsections).values_list(
+    favourite_subsections = Favourite.objects.filter(
+        user=request.user, subsection__in=Subsection.objects.filter(
+            section=section)).values_list(
         'subsection_id', flat=True) if request.user.is_authenticated else []
     return render(request, 'manual/subsection_list.html',
                   {
                       'section': section,
-                      'subsections': subsections,
+                      'subsection_dict': subsection_dict,
                       'favourite_sections': favourite_sections,
                       'favourite_subsections': favourite_subsections,
                   })

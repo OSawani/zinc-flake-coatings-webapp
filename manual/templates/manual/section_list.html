@@ -27,7 +27,7 @@
                     </div>
                     <p>{{ section.description|safe }}</p>
                     {% if section.subsections %}
-                        <a href="{% url 'subsection_detail' section.id %}" class="btn btn-primary">View Details</a>
+                        <a href="{% url 'subsection_list' section.id %}" class="btn btn-primary">View Details</a>
                     {% endif %}
                     <ul class="list-group">
                         {% for subsection in section.subsections %}
