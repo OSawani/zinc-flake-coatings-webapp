@@ -1,7 +1,6 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif; /* Ensure Roboto is used */
     margin: 0;
-    padding: 20px;
     background-color: #fff;
     color: #333;
 }

@@ -14,3 +14,8 @@ def get_item(dictionary, key):
     if dictionary:
         return dictionary.get(key)
     return None
+
+
+@register.filter
+def is_in_list(value, the_list):
+    return value in the_list
