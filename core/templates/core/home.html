@@ -9,12 +9,12 @@
 <section class="chapters mt-5">
     <div class="row">
         <div class="col-md-4">
-            <div class="card mb-4" data-bs-toggle="modal" data-bs-target="#introductionModal">
+            <div class="card mb-4">
                 <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon"><i class="fas fa-book-open"></i></div>
-                    <h5 class="card-title">Introduction</h5>
-                    <p class="card-text">Chapter 1: Introduction to ZNFL-Coatings.</p>
-                    <button class="btn btn-primary btn-learn-more" data-bs-toggle="modal" data-bs-target="#introductionModal">Learn More</button>
+                    <a href="{% url 'intro' %}"><div class="icon"><i class="fas fa-info-circle"></i></div></a>
+                    <h5 class="card-title">Einleitung</h5>
+                    <p class="card-text">Überblick: ZNFL-Beschichtungen.</p>
+                    <a href="{% url 'intro' %}" class="btn btn-primary btn-learn-more">Mehr erfahren</a>
                 </div>
             </div>
         </div>
@@ -24,17 +24,17 @@
                     <div class="icon"><i class="fas fa-tasks"></i></div>
                     <h5 class="card-title">Guidelines</h5>
                     <p class="card-text">Chapter 2: Guidelines for application.</p>
-                    <button class="btn btn-primary btn-learn-more" data-bs-toggle="modal" data-bs-target="#guidelinesModal">Learn More</button>
+                    <a href="{% url 'guide' %}" class="btn btn-primary btn-learn-more">Mehr erfahren</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card mb-4" data-bs-toggle="modal" data-bs-target="#productInfoModal">
                 <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon"><i class="fas fa-info-circle"></i></div>
-                    <h5 class="card-title">Product Information</h5>
+                    <div class="icon"><i class="fas fa-book-open"></i></div>
+                    <h5 class="card-title">Anwendungshandbuch</h5>
                     <p class="card-text">Chapter 3: Detailed product information.</p>
-                    <button class="btn btn-primary btn-learn-more" data-bs-toggle="modal" data-bs-target="#productInfoModal">Learn More</button>
+                    <a href="{% url 'section_list' %}" class="btn btn-primary btn-learn-more">Mehr erfahren</a>
                 </div>
             </div>
         </div>

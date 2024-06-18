@@ -1,0 +1,117 @@
+.container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.guidelines-content {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--primary-color);
+    background-color: var(--background-gray);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.guidelines-content h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--highlight-color);
+    padding-bottom: 10px;
+}
+
+.guidelines-content p {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.guidelines-content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.guidelines-content ul li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    color: var(--primary-color);
+}
+
+.guidelines-content ul li i {
+    color: var(--highlight-color);
+    margin-right: 10px;
+    margin-bottom: auto;
+}
+.intro-content ul li i.highlight-icon {
+    color: var(--highlight-color);
+    margin-right: 10px;
+}
+
+.guidelines-content address {
+    margin-top: 20px;
+    color: var(--primary-color);
+}
+.guidelines-content address a {color: var(--highlight-color);
+    text-decoration: none;
+}
+
+.guidelines-content address a:hover {
+    text-decoration: underline;
+}
+
+.guidelines-content address i {
+    margin-right: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .guidelines-content h1 {
+        font-size: 1.5em;
+    }
+
+    .guidelines-content p {
+        font-size: 1em;
+    }
+
+    .guidelines-content ul li i {
+        margin-right: 5px;
+    }
+}
+
+/* Custom styles for accordion */
+.accordion-button {
+    background-color: var(--highlight-color);
+    color: var(--secondary-color);
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--secondary-color);
+    background-color: var(--highlight-color);
+}
+
+.accordion-button::after {
+    filter: invert(1);
+}
+
+.accordion-button.collapsed {
+    color: var(--primary-color);
+    background-color: var(--background-gray);
+}
+
+.accordion-button.collapsed::after {
+    filter: invert(0);
+}
+
+.accordion-item {
+    border: none;
+}
+
+.accordion-header {
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.accordion-body {
+    background-color: var(--lightest-gray);
+}

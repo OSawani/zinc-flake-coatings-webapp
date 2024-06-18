@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Einleitung{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/content_css/guidelines.css' %}">
+{% endblock %}
+{% block content %}
+<section class="guidelines-content">
+    <h1 class="text-center">Einleitung</h1>
+    <p>Seit rund 40 Jahren entwickelt und fertigt Dörken Mikroschicht-Korrosionsschutz-Systeme und ist heute europäischer Markt- und Technologieführer im Bereich der Chrom(VI)-freien Zinklamellensysteme. Dahinter steht eine nachhaltige Unternehmensstrategie, die sich auf, aus technologischer Sicht, gleich mehrere Erfolgsfaktoren stützt:</p>
+    <div class="accordion" id="introAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Erfolgsfaktoren
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#introAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><i class="fas fa-check highlight-icon"></i> Ständig überwachte hohe Qualität der ausschließlich in Deutschland entwickelten und gefertigten Beschichtungssysteme.</li>
+                        <li><i class="fas fa-check highlight-icon"></i> Langjährige Bewährtheit beim Einsatz in der Automobilindustrie und anderen Branchen.</li>
+                        <li><i class="fas fa-check highlight-icon"></i> Globale Verfügbarkeit.</li>
+                        <li><i class="fas fa-check highlight-icon"></i> Einsatz von modernen Managementsystemen.</li>
+                        <li><i class="fas fa-check highlight-icon"></i> Ein weltweit agierendes Netzwerk hoch engagierter und qualifizierter Beschichtungsunternehmen, deren hoher Qualitätsstandard durch regelmäßige Audits* nicht nur gewährleistet, sondern stetig verbessert wird.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p>*Ein wesentlicher Bestandteil dieser Audits ist dieses Anwendungshandbuch.</p>
+        <p><strong>Das Handbuch enthält:</strong></p>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Inhalt des Handbuchs
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#introAccordion">
+                <div class="accordion-body">
+                    <ol>
+                        <li>Informationen und Hinweise zu unserem Zinklamellen-Produktportfolio.</li>
+                        <li>Einen Überblick über die verschiedenen Möglichkeiten der Applikation.</li>
+                        <li>Eine Mindestanforderung an die Dokumentation.</li>
+                        <li>Hinweise zur Qualitätsprüfung der Systeme.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <p>Aktuelle technische Daten zu unseren Produkten sind in den jeweiligen technischen Merkblättern und Sicherheitsdatenblättern hinterlegt.</p>
+    <p>Die technischen Merkblätter, Sicherheitsdatenblätter sowie weitere Downloads zum Anwendungshandbuch, auf die hier verwiesen werden, sind im Login-Bereich unserer Homepage zu finden. Hierfür ist eine Registrierung auf der Dörken Coatings-Homepage notwendig <a href="https://www.doerken.com/de/de/login-industrial-coatings">(Login >> Sign-up)</a>. Die Elektrotauchlackierung (DELTA-eLACK®) sowie das DELTA-PROZINC®-System sind nicht Bestandteil dieses Handbuchs.</p>
+    <p>Bei Fragen zum Inhalt dieses Handbuches oder zu weiteren Produkten der Dörken Coatings freuen wir uns über eine Kontaktaufnahme.</p>
+    <address class="contact-info mt-4">
+        <strong>KONTAKTDATEN</strong><br>
+        Dörken Coatings GmbH & Co. KG<br>
+        Wetterstraße 58<br>
+        D-58313 Herdecke<br>
+        <i class="fas fa-phone"></i> Telefon: +49 2330 63243<br>
+        <i class="fas fa-fax"></i> Fax: +49 2330 63354<br>
+        <i class="fas fa-envelope"></i> E-Mail: <a href="mailto:coatings@doerken.de">coatings@doerken.de</a><br>
+        <i class="fas fa-globe"></i> Internet: <a href="http://www.doerkencoatings.de">www.doerkencoatings.de</a>
+    </address>
+</section>
+{% endblock %}

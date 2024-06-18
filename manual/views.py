@@ -6,6 +6,14 @@ from allauth.account.models import EmailAddress
 
 
 # Create your views here.
+def intro(request):
+    return render(request, 'manual/intro.html')
+
+
+def guide(request):
+    return render(request, 'manual/guidelines.html')
+
+
 def section_list(request):
     sections = Section.objects.all()
     favourites = Favourite.objects.filter(

@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,21 +34,21 @@
                             <a class="nav-link" href="{% url 'home' %}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'section_list' %}">Content</a>
+                            <a class="nav-link" href="{% url 'section_list' %}">Inhalt</a>
                         </li>
                         {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                            <a class="nav-link" href="{% url 'account_logout' %}">Einloggen</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                            <a class="nav-link" href="{% url 'account_login' %}">Ausloggen</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
+                            <a class="nav-link" href="{% url 'account_signup' %}">Anmelden</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -58,7 +58,7 @@
         
         <!-- Search Bar -->
         <div class="search-bar">
-            <form action="{% url 'search_results' %}" method="get">
+            <form action="{% url 'search_results' %}" method="get" class="search-form">
                 <input type="search" name="q" placeholder="Search..." aria-label="Search">
             </form>
         </div>
@@ -76,7 +76,7 @@
         {% endif %}
         
         <!-- Main Content -->
-        <main class="container mt-3">
+        <main class="container mb-3">
             {% block content %}
             {% endblock %}
         </main>
@@ -84,12 +84,23 @@
         <!-- Footer -->
         <footer class="p-3">
             <div class="container text-center">
-                <p>&copy; 2024 Zinc-Flake Coatings Manual. All rights reserved.</p>
+                <p>&copy; 2024 Zinc-Flake Anwendungshandbuch. Alle Rechte vorbehalten.</p>
                 <p>
-                    <a href="#">Privacy Policy</a> |
-                    <a href="#">Terms of Service</a> |
-                    <a href="#">Contact Information</a>
+                    <a href="https://www.doerken.com/de/de/agb">AGB</a> |
+                    <a href="https://www.doerken.com/de/de/impressum">Impressum</a> |
+                    <a href="https://www.doerken.com/de/de/datenschutz">Datenschutz</a>
                 </p>
+                <div class="social-links">
+                <a href="https://www.youtube.com/channel/UCD6y0sBcVBNV_ovWbpl7QZg" class="social-icon" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/18038750/admin/updates/" class="social-icon" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://www.xing.com/companies/d%C3%B6rkengruppe%2Fewaldd%C3%B6rkenag" class="social-icon" target="_blank">
+                    <i class="fab fa-xing"></i>
+                </a>
+        </div>
             </div>
         </footer>
     
