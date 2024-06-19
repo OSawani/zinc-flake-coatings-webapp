@@ -100,7 +100,9 @@ def section_detail(request, section_id):
     subsections = Subsection.objects.filter(
         section=section, parent__isnull=True).order_by(
         'title').prefetch_related('sub_sections')
+    css_path = section.css_path
     return render(request, 'manual/section_detail.html', {
         'section': section,
         'subsections': subsections,
+        'css_path': css_path,
     })

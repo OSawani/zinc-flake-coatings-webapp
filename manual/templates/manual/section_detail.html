@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}{{ section.title }} - Zinc-Flake Coatings Manual{% endblock %}
+{% block extra_css %}
+    {% if css_path %}
+        <link rel="stylesheet" href="{{ css_path }}">
+    {% endif %}
+{% endblock %}
 {% block content %}
 <main class="content-container">
     <h1>{{ section.title }}</h1>
