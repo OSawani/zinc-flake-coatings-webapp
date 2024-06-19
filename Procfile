@@ -1,1 +1,1 @@
-web: gunicorn znflCoatingsManual.wsgi
+web: gunicorn znflCoatingsManual.wsgi --timeout 60
