@@ -27,6 +27,7 @@ class Section(models.Model):
                                null=True, blank=True, related_name='sections')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    css_path = models.CharField(null=True, blank=True)
 
     def __str__(self):
         return self.title
