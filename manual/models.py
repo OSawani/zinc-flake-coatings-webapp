@@ -22,7 +22,7 @@ def clean_html(html_content):
 # Create your models here.
 class Section(models.Model):
     title = models.CharField(max_length=255)
-    description = SummernoteTextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     author = models.ForeignKey('core.User', on_delete=models.SET_NULL,
                                null=True, blank=True, related_name='sections')
     created_at = models.DateTimeField(auto_now_add=True)
