@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}{{ section.title }} - Zinc-Flake Coatings Manual{% endblock %}
 {% block extra_css %}
     {% if css_path %}
-        <link rel="stylesheet" href="{{ css_path }}">
+        <link rel="stylesheet" href="{%  static css_path %}">
     {% endif %}
 {% endblock %}
 {% block content %}
