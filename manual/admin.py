@@ -6,14 +6,25 @@ from .models import Section, Subsection, ContentVersion
 
 
 # Register your models here.
+# form for Section that uses SummernoteWidget for the description field
+class SectionForm(forms.ModelForm):
+    class Meta:
+        model = Section
+        fields = '__all__'
+        widgets = {
+            'description': SummernoteWidget(),
+        }
+
+
 @admin.register(Section)
 class SectionAdmin(admin.ModelAdmin):
+    form = SectionForm
     list_display = (
         'title',
+        'css_path',
         'author',
         'created_at', 'updated_at'
     )
-    summernote_fields = ('description',)
 
 
 # form for Subsection that uses SummernoteWidget for the content field
@@ -22,7 +33,7 @@ class SubsectionForm(forms.ModelForm):
         model = Subsection
         fields = '__all__'
         widgets = {
-             'content': SummernoteWidget(),
+            'content': SummernoteWidget(),
         }
 
 

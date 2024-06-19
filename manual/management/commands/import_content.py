@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 section, created = Section.objects.get_or_create(
                     title=section_data['title'],
                     defaults={
-                        'description': section_data['description'],
+                        'description': section_data.get('description', ''), # Will only be set if section is created
                         'author': author,
                     }
                 )
@@ -41,7 +41,8 @@ class Command(BaseCommand):
                 subsection_data['author'] else None
 
             # Escape HTML content to ensure it is stored correctly
-            content = escape(subsection_data['content'])
+            content = escape(subsection_data.get('content', '')) # Will
+            # only be set if subsection is created
 
             subsection, created = Subsection.objects.get_or_create(
                 section=parent_section if isinstance(
