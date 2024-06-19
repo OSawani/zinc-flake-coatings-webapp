@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .models import Section, Subsection
@@ -15,6 +16,13 @@ def guide(request):
     return render(request, 'manual/guidelines.html')
 
 
+def natural_keys(text):
+    """
+    alist.sort(key=natural_keys) sorts in human order.
+    """
+    return [int(text) if text.isdigit() else text for text in re.split(r'(\d+)', text)]
+
+
 def section_list(request):
     sections = Section.objects.filter(~Q(title__in=['Introduction',
                                                    'Guidelines'])).order_by(
@@ -22,9 +30,15 @@ def section_list(request):
     favourites = Favourite.objects.filter(
         user=request.user, section__in=sections).values_list(
         'section_id', flat=True) if request.user.is_authenticated else []
+
+    # Convert queryset to list and sort naturally
+    sections = list(sections)
+    sections.sort(key=lambda section: natural_keys(section.title))
+
     for section in sections:
-        section.subsections = Subsection.objects.filter(
-            section=section).order_by('title')
+        # Fetch and sort subsections naturally
+        section.subsections = list(Subsection.objects.filter(section=section))
+        section.subsections.sort(key=lambda subsection: natural_keys(subsection.title))
     return render(request, 'manual/section_list.html',
                   {
                       'sections': sections,
@@ -93,6 +107,8 @@ def subsection_detail(request, subsection_id):
                       'is_favourite_subsection': is_favourite_subsection,
                       'is_favourite_section': is_favourite_section,
                   })
+
+
 
 
 def section_detail(request, section_id):
