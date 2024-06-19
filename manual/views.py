@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
 from .models import Section, Subsection
 from interactions.models import Favourite
 from interactions.forms import CommentForm
@@ -15,7 +16,9 @@ def guide(request):
 
 
 def section_list(request):
-    sections = Section.objects.all()
+    sections = Section.objects.filter(~Q(title__in=['Introduction',
+                                                   'Guidelines'])).order_by(
+        'title')
     favourites = Favourite.objects.filter(
         user=request.user, section__in=sections).values_list(
         'section_id', flat=True) if request.user.is_authenticated else []

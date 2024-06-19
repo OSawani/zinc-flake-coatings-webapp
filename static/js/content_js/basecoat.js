@@ -1,4 +1,3 @@
-<script>
 document.addEventListener("DOMContentLoaded", function() {
     var tableContainers = document.querySelectorAll(".table-container");
 
@@ -18,4 +17,3 @@ document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener("resize", checkScroll);
     checkScroll();
 });
-</script>

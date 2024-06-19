@@ -23,7 +23,7 @@
             <div class="container">
                 <a class="navbar-brand" href="{% url 'home' %}">
                     <img src="{% static 'images/doerken_RGB_white.svg' %}" alt="Zinc-Flake Coatings Manual Logo" height="40">
-                    <img src="{% static 'images/Industrial Coatings_Icon.png' %}" alt="Zinc-Flake Coatings Manual Logo" alt="Industrial coatings logo" height="40" class="ms-2">
+                    <img src="{% static 'images/Industrial Coatings_Icon.png' %}" alt="Zinc-Flake Coatings Manual Logo" alt="Industrial coatings logo" height="30" class="ms-2 mt-2 d-none d-sm-inline-block">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -41,11 +41,11 @@
                             <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_logout' %}">Einloggen</a>
+                            <a class="nav-link" href="{% url 'account_logout' %}">Ausloggen</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_login' %}">Ausloggen</a>
+                            <a class="nav-link" href="{% url 'account_login' %}">Einloggen</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'account_signup' %}">Anmelden</a>

@@ -46,7 +46,6 @@
 }
 .intro-content ul li i.highlight-icon {
     color: var(--highlight-color);
-    margin-right: 10px;
 }
 
 .guidelines-content address {
@@ -114,4 +113,21 @@
 
 .accordion-body {
     background-color: var(--lightest-gray);
+}
+
+.footnote {
+    font-size: 0.9em;
+    color: var(--primary-color);
+    margin-top: 10px;
+}
+.highlight-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+.highlight-icon {
+    color: var(--highlight-color);
+    margin-right: 15px;
+    margin-top: 4px;
 }
