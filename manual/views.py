@@ -23,7 +23,8 @@ def section_list(request):
         user=request.user, section__in=sections).values_list(
         'section_id', flat=True) if request.user.is_authenticated else []
     for section in sections:
-        section.subsections = Subsection.objects.filter(section=section)
+        section.subsections = Subsection.objects.filter(
+            section=section).order_by('title')
     return render(request, 'manual/section_list.html',
                   {
                       'sections': sections,
@@ -96,7 +97,9 @@ def subsection_detail(request, subsection_id):
 
 def section_detail(request, section_id):
     section = get_object_or_404(Section, id=section_id)
-    subsections = Subsection.objects.filter(section=section)
+    subsections = Subsection.objects.filter(
+        section=section, parent__isnull=True).order_by(
+        'title').prefetch_related('sub_sections')
     return render(request, 'manual/section_detail.html', {
         'section': section,
         'subsections': subsections,

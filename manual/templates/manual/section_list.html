@@ -7,7 +7,7 @@
 {% endblock %}
 {% block content %}
 <section class="content">
-    <h1 class="text-center">Sections</h1>
+    <h1>Handbuchkapitel</h1>
     <div class="accordion" id="sectionsAccordion">
         {% for section in sections %}
             <div class="accordion-item">
@@ -27,8 +27,8 @@
                     <div class="accordion-body">
                         <p>{{ section.description|safe }}</p>
                         <ul class="list-group">
-                            {% for subsection in section.subsections %}
-                                <li class="list-group">{{ subsection.title }}</li>
+                            {% for subsection in section.subsections.all|dictsort:"title" %}
+                                <a href="{% url 'section_detail' subsection.section.id %}#subsection-{{ subsection.id }}">{{ subsection.title }}</a>
                             {% endfor %}
                         </ul>
                     </div>

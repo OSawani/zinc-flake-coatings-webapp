@@ -1,25 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}{{ section.title }} - Zinc-Flake Coatings Manual{% endblock %}
 {% block content %}
-<main class="container mt-5">
-    <h2>{{ section.title }}</h2>
+<main class="content-container">
+    <h1>{{ section.title }}</h1>
     <p>{{ section.description|safe }}</p>
-    <div class="accordion" id="subsectionsAccordion">
-        {% for subsection in subsections %}
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="heading{{ forloop.counter }}">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
-                    {{ subsection.title }}
-                </button>
-            </h2>
-            <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#subsectionsAccordion">
-                <div class="accordion-body">
-                    <p>{{ subsection.content|safe }}</p>
-                    <a href="{% url 'subsection_detail' subsection.id %}" class="btn btn-primary">View Details</a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+    {% include 'manual/subsection_recursive.html' with subsections=subsections level=2 %}
 </main>
 {% endblock %}
