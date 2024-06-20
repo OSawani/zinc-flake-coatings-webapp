@@ -20,12 +20,13 @@ def natural_keys(text):
     """
     alist.sort(key=natural_keys) sorts in human order.
     """
-    return [int(text) if text.isdigit() else text for text in re.split(r'(\d+)', text)]
+    return [int(text) if text.isdigit() else text for text in
+            re.split(r'(\d+)', text)]
 
 
 def section_list(request):
     sections = Section.objects.filter(~Q(title__in=['Introduction',
-                                                   'Guidelines'])).order_by(
+                                                    'Guidelines'])).order_by(
         'title')
 
     # Prefetch subsections to reduce the number of queries
@@ -55,7 +56,8 @@ def section_list(request):
 
 
 def get_flat_subsections(section):
-    subsections = Subsection.objects.filter(section=section).select_related('parent')
+    subsections = Subsection.objects.filter(section=section).select_related(
+        'parent')
     subsection_dict = {None: []}
     for subsection in subsections:
         parent_id = subsection.parent_id if subsection.parent else None
@@ -114,8 +116,6 @@ def subsection_detail(request, subsection_id):
                       'is_favourite_subsection': is_favourite_subsection,
                       'is_favourite_section': is_favourite_section,
                   })
-
-
 
 
 def section_detail(request, section_id):

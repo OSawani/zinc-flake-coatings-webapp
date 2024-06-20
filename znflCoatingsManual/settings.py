@@ -225,7 +225,9 @@ SUMMERNOTE_CONFIG = {
             'section', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p',
             'span', 'blockquote', 'pre', 'b', 'i', 'u', 'strong', 'em',
             'strike', 'code', 'hr', 'br', 'ul', 'ol', 'li', 'table',
-            'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'a', 'img'
+            'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'a', 'img',
+            'figure', 'figcaption', 'sup', 'sub', 'summary', 'details',
+            'article',
         ],
         'allowedAttributes': {
             '*': ['style', 'class', 'id', 'name', 'alt', 'title', 'target'],
