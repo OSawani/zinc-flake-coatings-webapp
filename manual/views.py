@@ -1,6 +1,6 @@
 import re
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from .models import Section, Subsection
 from interactions.models import Favourite
 from interactions.forms import CommentForm
@@ -27,6 +27,12 @@ def section_list(request):
     sections = Section.objects.filter(~Q(title__in=['Introduction',
                                                    'Guidelines'])).order_by(
         'title')
+
+    # Prefetch subsections to reduce the number of queries
+    sections = sections.prefetch_related(
+        Prefetch('sub_sections', queryset=Subsection.objects.order_by(
+            'title')))
+
     favourites = Favourite.objects.filter(
         user=request.user, section__in=sections).values_list(
         'section_id', flat=True) if request.user.is_authenticated else []
@@ -36,9 +42,10 @@ def section_list(request):
     sections.sort(key=lambda section: natural_keys(section.title))
 
     for section in sections:
-        # Fetch and sort subsections naturally
-        section.subsections = list(Subsection.objects.filter(section=section))
-        section.subsections.sort(key=lambda subsection: natural_keys(subsection.title))
+        # Subsections are already prefetched and ordered
+        section.subsections = sorted(
+            section.sub_sections.all(), key=lambda subsection: natural_keys(
+                subsection.title))
     return render(request, 'manual/section_list.html',
                   {
                       'sections': sections,
