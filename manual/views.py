@@ -32,7 +32,8 @@ def section_list(request):
     # Prefetch subsections to reduce the number of queries
     sections = sections.prefetch_related(
         Prefetch('sub_sections', queryset=Subsection.objects.order_by(
-            'title')))
+            'title'))
+    )
 
     favourites = Favourite.objects.filter(
         user=request.user, section__in=sections).values_list(
@@ -51,8 +52,7 @@ def section_list(request):
                   {
                       'sections': sections,
                       'favourite_sections': favourites,
-                  }
-                  )
+                  })
 
 
 def get_flat_subsections(section):
@@ -73,7 +73,8 @@ def subsection_list(request, section_id):
         'section_id', flat=True) if request.user.is_authenticated else []
     favourite_subsections = Favourite.objects.filter(
         user=request.user, subsection__in=Subsection.objects.filter(
-            section=section)).values_list(
+            section=section)
+    ).values_list(
         'subsection_id', flat=True) if request.user.is_authenticated else []
     return render(request, 'manual/subsection_list.html',
                   {
@@ -90,20 +91,14 @@ def subsection_detail(request, subsection_id):
         "-created_at")
     comment_count = comments.count()
 
-    # Check if the user is authenticated and their email is verified
-    email_verified = False
-    if request.user.is_authenticated:
-        email_verified = EmailAddress.objects.filter(user=request.user,
-                                                     verified=True).exists()
+    email_verified = EmailAddress.objects.filter(
+        user=request.user, verified=True).exists() if request.user.is_authenticated else False
 
     # Determine if the subsection and section are favourites
-    is_favourite_subsection = False
-    is_favourite_section = False
-    if request.user.is_authenticated:
-        is_favourite_subsection = Favourite.objects.filter(
-            user=request.user, subsection=subsection).exists()
-        is_favourite_section = Favourite.objects.filter(
-            user=request.user, section=subsection.section).exists()
+    is_favourite_subsection = Favourite.objects.filter(
+        user=request.user, subsection=subsection).exists() if request.user.is_authenticated else False
+    is_favourite_section = Favourite.objects.filter(
+            user=request.user, section=subsection.section).exists() if request.user.is_authenticated else False
 
     form = CommentForm()
     return render(request, 'manual/subsection_detail.html',

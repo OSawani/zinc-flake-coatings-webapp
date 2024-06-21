@@ -37,6 +37,13 @@ class Section(models.Model):
     def get_absolute_url(self):
         return reverse('section_detail', args=[self.id])
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['title']),
+            models.Index(fields=['created_at']),
+            models.Index(fields=['updated_at']),
+        ]
+
 
 class Subsection(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE,
@@ -62,6 +69,15 @@ class Subsection(models.Model):
 
     def get_absolute_url(self):
         return reverse('subsection_detail', args=[self.id])
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['section']),
+            models.Index(fields=['parent']),
+            models.Index(fields=['title']),
+            models.Index(fields=['created_at']),
+            models.Index(fields=['updated_at']),
+        ]
 
 
 class ContentVersion(models.Model):
