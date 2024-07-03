@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from django_summernote.fields import SummernoteTextField
 from core.models import User
 import bleach
 
@@ -10,12 +9,14 @@ def clean_html(html_content):
     allowed_tags = bleach.sanitizer.ALLOWED_TAGS + [
         'p', 'br', 'div', 'span', 'img', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
         'th', 'tr', 'td', 'table', 'thead', 'tbody', 'sup', 'sub', 'ul', 'ol',
-        'section','sup', 'sub', 'hr', 'blockquote', 'pre', 'code', 'a', 'li',
-        'caption','figure', 'figcaption', 'summary', 'details','article',
+        'section', 'sup', 'sub', 'hr', 'blockquote', 'pre', 'code', 'a', 'li',
+        'caption', 'figure', 'figcaption', 'summary', 'details', 'article',
     ]
     allowed_attrs = {
-        '*': ['class', 'style', 'src', 'href', 'alt']
+        '*': ['class', 'style', 'src', 'href', 'alt', 'srcset', 'sizes',
+              'loading']
     }
+
     cleaned_content = bleach.clean(html_content, tags=allowed_tags,
                                    attributes=allowed_attrs)
     return cleaned_content

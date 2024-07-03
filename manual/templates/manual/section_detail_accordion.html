@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ section.title }} - Zinc-Flake Coatings Manual{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{%  static 'css/content_css/section_detail_accordion.css' %}">
+{% endblock %}
+{% block content %}
+<main class="content-container">
+    <div class="container mt-5">
+        <h1>{{ section.title }}</h1>
+        <div class="section-description mb-4">
+            {{ section.description|safe }}
+        </div>
+        <div class="accordion" id="accordionExample">
+            {% for subsection in subsections %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{ subsection.id }}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ subsection.id }}" aria-expanded="false" aria-controls="collapse{{ subsection.id }}">
+                            {{ subsection.title }}
+                        </button>
+                    </h2>
+                    <div id="collapse{{ subsection.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ subsection.id }}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="subsection-content">
+                                {{ subsection.content|safe }}
+                            </div>
+                            {% if subsection.sub_sections.exists %}
+                                <div class="sub-subsections">
+                                    {% for sub_subsection in subsection.sub_sections.all %}
+                                        <div class="sub-subsection">
+                                            <h3>{{ sub_subsection.title }}</h3>
+                                            <div class="sub-subsection-content">
+                                                {{ sub_subsection.content|safe }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

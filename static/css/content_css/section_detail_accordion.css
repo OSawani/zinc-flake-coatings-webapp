@@ -1,0 +1,125 @@
+/* style.css */
+/* Root font size for scalability */
+:root {
+    font-family: 'Roboto', sans-serif;
+    --primary-color: #000000; /* Primary black */
+    --secondary-color: #FFFFFF; /* Primary white */
+    --highlight-color: #FF4610; /* Secondary highlight color */
+    --light-gray: #CBCBCB; /* Secondary light gray */
+    --medium-gray: #D6D6D6; /* Tertiary medium gray */
+    --lightest-gray: #DFDFDF; /* Tertiary lightest gray */
+    --background-gray: #F5F5F5; /* Background light gray */
+}
+
+.container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 12px;
+}
+
+/* Section and subsection titles */
+.section-title {
+    font-size: 2rem; /* 32px */
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+.subsection-title {
+    font-size: 1.5rem; /* 24px */
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+}
+
+/* Paragraph styles */
+.section-description, .subsection-body {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+/* Custom table styles */
+.table-custom {
+    background-color: var(--secondary-color);
+}
+.table-custom th,
+.table-custom td {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--light-gray);
+}
+.table-sticky-first-column {
+    overflow-x: auto;
+    display: block;
+}
+.table-sticky-first-column th,
+.table-sticky-first-column td {
+    min-width: 120px;
+}
+.table-sticky-first-column th:first-child,
+.table-sticky-first-column td:first-child {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    left: 0;
+    background-color: var(--light-gray); /* Adjust as necessary */
+    z-index: 1;
+}
+.sticky-column {
+    background-color: var(--light-gray); /* Match with table header background */
+}
+
+/* Alert styles */
+.alert-custom {
+    background-color: var(--highlight-color);
+    color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+/* Card styles */
+.card {
+    background-color: var(--lightest-gray);
+    border: 1px solid var(--medium-gray);
+    border-radius: 0.25rem;
+}
+.card-body {
+    padding: 1rem;
+}
+.card-text {
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive adjustments */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Blockquote styles */
+.blockquote {
+    padding: 0.5rem 1rem;
+    margin: 0 0 1rem;
+    border-left: 0.25rem solid var(--highlight-color);
+    color: var(--primary-color);
+    background-color: var(--lightest-gray);
+}
+
+/* Backgrounds */
+.bg-light-grey {
+    background-color: var(--light-gray);
+}
+
+/* Chapter 7 */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--background-gray);
+}
+
+ul.checklist, ol.steps {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+ul.checklist li, ol.steps li {
+    margin-bottom: 0.5rem;
+}

@@ -92,13 +92,16 @@ def subsection_detail(request, subsection_id):
     comment_count = comments.count()
 
     email_verified = EmailAddress.objects.filter(
-        user=request.user, verified=True).exists() if request.user.is_authenticated else False
+        user=request.user,
+        verified=True).exists() if request.user.is_authenticated else False
 
     # Determine if the subsection and section are favourites
     is_favourite_subsection = Favourite.objects.filter(
-        user=request.user, subsection=subsection).exists() if request.user.is_authenticated else False
+        user=request.user,
+        subsection=subsection).exists() if request.user.is_authenticated else False
     is_favourite_section = Favourite.objects.filter(
-            user=request.user, section=subsection.section).exists() if request.user.is_authenticated else False
+        user=request.user,
+        section=subsection.section).exists() if request.user.is_authenticated else False
 
     form = CommentForm()
     return render(request, 'manual/subsection_detail.html',
@@ -123,4 +126,15 @@ def section_detail(request, section_id):
         'section': section,
         'subsections': subsections,
         'css_path': css_path,
+    })
+
+
+def section_detail_accordion(request, section_id):
+    section = get_object_or_404(Section, id=section_id)
+    subsections = Subsection.objects.filter(section=section,
+                                            parent__isnull=True).order_by(
+        'title').prefetch_related('sub_sections')
+    return render(request, 'manual/section_detail_accordion.html', {
+        'section': section,
+        'subsections': subsections,
     })
