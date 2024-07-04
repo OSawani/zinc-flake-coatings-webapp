@@ -123,3 +123,24 @@ ul.checklist, ol.steps {
 ul.checklist li, ol.steps li {
     margin-bottom: 0.5rem;
 }
+
+/* Styles for the main accordion */
+.accordion .accordion-item {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Styles for the nested accordion */
+.nested-accordion .accordion-item {
+    margin-bottom: 0.5rem;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Styles for nested accordion headers */
+.nested-accordion .accordion-header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+}

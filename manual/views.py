@@ -24,30 +24,60 @@ def natural_keys(text):
             re.split(r'(\d+)', text)]
 
 
+def build_hierarchy(sections):
+    """
+    Build a hierarchy of sections and subsections.
+    """
+    # Create a dictionary of section IDs to section objects
+    section_dict = {section.id: section for section in sections}
+
+    for section in sections:
+        section.subsections = []
+
+    # Fetch all subsections for the given sections
+    subsections = Subsection.objects.filter(section__in=sections).order_by(
+        'title')
+
+    for subsection in subsections:
+        subsection.subsections = []
+        if subsection.parent_id:
+            # Check if parent_id is in section_dict before appending
+            if subsection.parent_id in section_dict:
+                section_dict[subsection.parent_id].subsections.append(
+                    subsection)
+            else:
+                print(
+                    f"Warning: Subsection {subsection.id} has parent {subsection.parent_id} which is not in section_dict")
+        else:
+            # Check if section_id is in section_dict before appending
+            if subsection.section_id in section_dict:
+                section_dict[subsection.section_id].subsections.append(
+                    subsection)
+            else:
+                print(
+                    f"Warning: Subsection {subsection.id} has section {subsection.section_id} which is not in section_dict")
+
+    return list(section_dict.values())
+
+
 def section_list(request):
     sections = Section.objects.filter(~Q(title__in=['Introduction',
                                                     'Guidelines'])).order_by(
         'title')
 
-    # Prefetch subsections to reduce the number of queries
-    sections = sections.prefetch_related(
-        Prefetch('sub_sections', queryset=Subsection.objects.order_by(
-            'title'))
-    )
-
     favourites = Favourite.objects.filter(
         user=request.user, section__in=sections).values_list(
         'section_id', flat=True) if request.user.is_authenticated else []
 
-    # Convert queryset to list and sort naturally
+    # Convert queryset to list
     sections = list(sections)
+
+    # Build hierarchical structure
+    sections = build_hierarchy(sections)
+
+    # Sort sections naturally
     sections.sort(key=lambda section: natural_keys(section.title))
 
-    for section in sections:
-        # Subsections are already prefetched and ordered
-        section.subsections = sorted(
-            section.sub_sections.all(), key=lambda subsection: natural_keys(
-                subsection.title))
     return render(request, 'manual/section_list.html',
                   {
                       'sections': sections,
@@ -76,7 +106,7 @@ def subsection_list(request, section_id):
             section=section)
     ).values_list(
         'subsection_id', flat=True) if request.user.is_authenticated else []
-    return render(request, 'manual/subsection_list.html',
+    return render(request, 'manual/subsection_list_depr.html',
                   {
                       'section': section,
                       'subsection_dict': subsection_dict,
@@ -132,8 +162,19 @@ def section_detail(request, section_id):
 def section_detail_accordion(request, section_id):
     section = get_object_or_404(Section, id=section_id)
     subsections = Subsection.objects.filter(section=section,
-                                            parent__isnull=True).order_by(
-        'title').prefetch_related('sub_sections')
+                                            parent__isnull=True).prefetch_related(
+        Prefetch('sub_sections', queryset=Subsection.objects.order_by('title'))
+    ).order_by('title')
+
+    # Convert query sets to lists and sort naturally
+    subsections = list(subsections)
+    subsections.sort(key=lambda subsection: natural_keys(subsection.title))
+
+    for subsection in subsections:
+        subsection.subsections = sorted(list(subsection.sub_sections.all()),
+                                        key=lambda subsubsection: natural_keys(
+                                            subsubsection.title))
+
     return render(request, 'manual/section_detail_accordion.html', {
         'section': section,
         'subsections': subsections,

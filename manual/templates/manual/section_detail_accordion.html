@@ -24,13 +24,21 @@
                             <div class="subsection-content">
                                 {{ subsection.content|safe }}
                             </div>
-                            {% if subsection.sub_sections.exists %}
-                                <div class="sub-subsections">
-                                    {% for sub_subsection in subsection.sub_sections.all %}
-                                        <div class="sub-subsection">
-                                            <h3>{{ sub_subsection.title }}</h3>
-                                            <div class="sub-subsection-content">
-                                                {{ sub_subsection.content|safe }}
+                            {% if subsection.subsections %}
+                                <div class="accordion nested-accordion" id="nestedAccordion{{ subsection.id }}">
+                                    {% for subsubsection in subsection.subsections %}
+                                        <div class="accordion-item">
+                                            <h3 class="accordion-header" id="nestedHeading{{ subsubsection.id }}">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nestedCollapse{{ subsubsection.id }}" aria-expanded="false" aria-controls="nestedCollapse{{ subsubsection.id }}">
+                                                    {{ subsubsection.title }}
+                                                </button>
+                                            </h3>
+                                            <div id="nestedCollapse{{ subsubsection.id }}" class="accordion-collapse collapse" aria-labelledby="nestedHeading{{ subsubsection.id }}" data-bs-parent="#nestedAccordion{{ subsection.id }}">
+                                                <div class="accordion-body">
+                                                    <div class="sub-subsection-content">
+                                                        {{ subsubsection.content|safe }}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     {% endfor %}

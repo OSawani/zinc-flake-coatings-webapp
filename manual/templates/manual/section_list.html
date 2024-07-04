@@ -28,11 +28,7 @@
                         <p>{{ section.description|safe }}</p>
                         <!-- Added section link -->
                         <p><a href="{% url 'section_detail_accordion' section.id %}">View Section</a></p>
-                        <ul class="list-group">
-                            {% for subsection in section.subsections %}
-                                <a href="{% url 'section_detail_accordion' subsection.section.id %}#subsection-{{ subsection.id }}">{{ subsection.title }}</a>
-                            {% endfor %}
-                        </ul>
+                        {% include 'manual/subsection_list.html' with subsections=section.subsections %}
                     </div>
                 </div>
             </div>
