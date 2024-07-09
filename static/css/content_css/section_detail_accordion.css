@@ -126,15 +126,14 @@ ul.checklist li, ol.steps li {
 
 /* Styles for the main accordion */
 .accordion .accordion-item {
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
+    margin-bottom: 0.15rem;
+    border: 2px solid var(--highlight-color);
     border-radius: 5px;
 }
 
 /* Styles for the nested accordion */
 .nested-accordion .accordion-item {
-    margin-bottom: 0.5rem;
-    border: 1px solid #bbb;
+    border: 2px inset var(--background-gray);
     border-radius: 5px;
     background-color: #f9f9f9;
 }

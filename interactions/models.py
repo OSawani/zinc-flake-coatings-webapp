@@ -6,6 +6,7 @@ from manual.models import Section, Subsection
 # Create your models here.
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name='comments', null=True, blank=True)
     subsection = models.ForeignKey(Subsection, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField()
     approved = models.BooleanField(default=True)
@@ -13,7 +14,15 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        if self.section:
+            return f'Comment by {self.user.email} on section {self.section.title}'
         return f'Comment by {self.user.email} on {self.subsection.title}'
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['created_at']),
+            models.Index(fields=['updated_at']),
+        ]
 
 
 class Favourite(models.Model):
