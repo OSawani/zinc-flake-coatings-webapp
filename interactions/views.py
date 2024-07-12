@@ -107,6 +107,55 @@ def add_favourite(request, content_type, content_id):
                                      'redirect_if_referer_not_found'))
 
 
+def add_comment_to_section(request, section_id):
+    section = get_object_or_404(Section, id=section_id)
+    email_verified = EmailAddress.objects.filter(user=request.user, verified=True).exists()
+
+    if not email_verified:
+        return render(request, 'interactions/email_not_verified.html')
+
+    if not request.user.is_approved:
+        return render(request, 'interactions/not_approved.html')
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.section = section
+            comment.approved = True  # Will change to False if admin approval is needed in the future
+            comment.save()
+            return redirect('section_detail_accordion', section_id=section.id)
+    else:
+        form = CommentForm()
+
+    return render(request, 'interactions/comment_form.html', {'form': form, 'section': section})
+
+@login_required
+def edit_section_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id, user=request.user, section__isnull=False)
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.approved = True  # Will change to False if admin approval is needed in the future
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'Comment updated successfully')
+            return redirect('section_detail_accordion', section_id=comment.section.id)
+    else:
+        form = CommentForm(instance=comment)
+    return render(request, 'interactions/edit_comment.html', {'form': form, 'comment': comment})
+
+@login_required
+def delete_section_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id, user=request.user, section__isnull=False)
+    if request.method == 'POST':
+        section_id = comment.section.id
+        comment.delete()
+        messages.add_message(request, messages.SUCCESS, 'Comment deleted successfully')
+        return redirect('section_detail_accordion', section_id=section_id)
+    return render(request, 'interactions/delete_comment.html', {'comment': comment})
+
 @login_required
 def list_favourites(request):
     user = request.user

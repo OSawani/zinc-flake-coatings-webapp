@@ -99,7 +99,7 @@
             <div class="modal-body">
                 <ul class="list-group">
                     {% for section in sections %}
-                    <li class="list-group-item"><a href="{% url 'section_detail' section.id %}">{{ section.title }}</a></li>
+                    <li class="list-group-item"><a href="{% url 'section_detail_accordion' section.id %}">{{ section.title }}</a></li>
                     {% endfor %}
                 </ul>
             </div>

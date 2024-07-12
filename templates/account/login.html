@@ -3,14 +3,14 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-3">
     <h2>Login</h2>
     <form method="post" action="{% url 'account_login' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
-    <p><a href="{% url 'account_signup' %}">Sign Up</a></p>
-    <p><a href="{% url 'account_reset_password' %}">Forgot Password?</a></p>
+    <p><a href="{% url 'account_signup' %}">Sie haben noch kein Konto? Konto anlegen</a></p>
+    <p><a href="{% url 'account_reset_password' %}">Passwort vergessen?</a></p>
 </div>
 {% endblock %}

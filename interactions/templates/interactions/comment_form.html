@@ -3,11 +3,11 @@
 {% block content %}
 <main class="container mt-5">
     <div class="content-section">
-        <h2>Add a Comment</h2>
+        <h2>Einen Kommentar schreiben</h2>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Kommentar abschicken</button>
         </form>
     </div>
 </main>

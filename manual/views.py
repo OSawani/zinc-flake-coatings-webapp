@@ -2,7 +2,7 @@ import re
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Prefetch
 from .models import Section, Subsection
-from interactions.models import Favourite
+from interactions.models import Favourite, Comment
 from interactions.forms import CommentForm
 from allauth.account.models import EmailAddress
 
@@ -175,7 +175,20 @@ def section_detail_accordion(request, section_id):
                                         key=lambda subsubsection: natural_keys(
                                             subsubsection.title))
 
+    comments = section.comments.filter(approved=True).order_by("-created_at")
+    comment_count = comments.count()
+
+    email_verified = EmailAddress.objects.filter(
+        user=request.user,
+        verified=True).exists() if request.user.is_authenticated else False
+
+    form = CommentForm()
+
     return render(request, 'manual/section_detail_accordion.html', {
         'section': section,
         'subsections': subsections,
+        'comments': comments,
+        'form': form,
+        'comment_count': comment_count,
+        'email_verified': email_verified,
     })

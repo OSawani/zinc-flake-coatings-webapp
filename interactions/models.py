@@ -7,7 +7,8 @@ from manual.models import Section, Subsection
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name='comments', null=True, blank=True)
-    subsection = models.ForeignKey(Subsection, on_delete=models.CASCADE, related_name='comments')
+    subsection = models.ForeignKey(Subsection, on_delete=models.CASCADE,
+                                   related_name='comments', null=True, blank=True)
     content = models.TextField()
     approved = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -374,7 +374,7 @@ footer a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 /* Comments Container */
-.content-container {
+.comment-container {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     color: var(--primary-color);
@@ -383,7 +383,6 @@ footer a:hover {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .content-container h1 {
