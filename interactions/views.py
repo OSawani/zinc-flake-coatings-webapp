@@ -125,6 +125,8 @@ def add_comment_to_section(request, section_id):
             comment.section = section
             comment.approved = True  # Will change to False if admin approval is needed in the future
             comment.save()
+            messages.add_message(request, messages.SUCCESS,
+                                 'Kommentar abgeschickt. Scrollen Sie nach unten, um Ihre Kommentare zu sehen.')
             return redirect('section_detail_accordion', section_id=section.id)
     else:
         form = CommentForm()

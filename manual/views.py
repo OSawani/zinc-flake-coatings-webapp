@@ -30,6 +30,7 @@ def build_hierarchy(sections):
     """
     return sections
 
+
 def build_subsection_hierarchy(subsections):
     """
     Build a hierarchy of subsections.
@@ -95,8 +96,6 @@ def section_list(request):
                       'sections': sections,
                       'favourite_sections': favourites,
                   })
-
-
 
 
 def get_flat_subsections(section):
