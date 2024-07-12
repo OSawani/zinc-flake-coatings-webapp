@@ -3,7 +3,7 @@
 {% load custom_filters %}
 {% block title %}Sections{% endblock %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/content_css/section_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/pages/section_list.css' %}">
 {% endblock %}
 {% block content %}
 <section class="content">
@@ -26,10 +26,13 @@
                 <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#sectionsAccordion">
                     <div class="accordion-body">
                         <p>{{ section.description|safe }}</p>
+
                         <!-- Added section link -->
-                        <p><a href="{% url 'section_detail_accordion' section.id %}">View Section</a></p>
+                        <p><a href="{% url 'section_detail_accordion' section.id %}">Kapitel ansehen</a></p>
+                        <!-- Subsection links -->
                         {% include 'manual/subsection_list.html' with subsections=section.subsections %}
                     </div>
+
                 </div>
             </div>
         {% endfor %}

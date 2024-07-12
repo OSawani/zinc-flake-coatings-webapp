@@ -2,7 +2,13 @@
 {% load static %}
 {% block title %}{{ section.title }} - Zinc-Flake Coatings Manual{% endblock %}
 {% block extra_css %}
-<link rel="stylesheet" href="{%  static 'css/content_css/section_detail_accordion.css' %}">
+<link rel="stylesheet" href="{%  static 'css/pages/section_detail_accordion.css' %}">
+{% endblock %}
+{% block head %}
+{{ block.super }}
+<!-- Include external scripts here -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 {% endblock %}
 {% block content %}
 <nav aria-label="breadcrumb">
@@ -12,7 +18,7 @@
     <li class="breadcrumb-item active" aria-current="page">{{ section.title }}</li>
 </ol>
 </nav>
-<main class="content-container">
+<main class="content">
     <div class="container mt-5">
         <h1>{{ section.title }}
             <a href="{% url 'add_favourite' 'section' section.id %}" class="favourite-icon">
@@ -28,27 +34,27 @@
         </div>
         <div class="accordion" id="accordionExample">
             {% for subsection in subsections %}
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading{{ subsection.id }}">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ subsection.id }}" aria-expanded="false" aria-controls="collapse{{ subsection.id }}">
+                <div class="accordion-item" id="subsection-{{ subsection.id }}">
+                    <h2 class="accordion-header" id="heading-{{ subsection.id }}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ subsection.id }}" aria-expanded="false" aria-controls="collapse-{{ subsection.id }}">
                             {{ subsection.title }}
                         </button>
                     </h2>
-                    <div id="collapse{{ subsection.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ subsection.id }}" data-bs-parent="#accordionExample">
+                    <div id="collapse-{{ subsection.id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ subsection.id }}" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             <div class="subsection-content">
                                 {{ subsection.content|safe }}
                             </div>
                             {% if subsection.subsections %}
-                                <div class="accordion nested-accordion" id="nestedAccordion{{ subsection.id }}">
+                                <div class="accordion nested-accordion" id="nestedAccordion-{{ subsection.id }}">
                                     {% for subsubsection in subsection.subsections %}
-                                        <div class="accordion-item">
-                                            <h3 class="accordion-header" id="nestedHeading{{ subsubsection.id }}">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nestedCollapse{{ subsubsection.id }}" aria-expanded="false" aria-controls="nestedCollapse{{ subsubsection.id }}">
+                                        <div class="accordion-item" id="subsubsection-{{ subsubsection.id }}">
+                                            <h3 class="accordion-header" id="nestedHeading-{{ subsubsection.id }}">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nestedCollapse-{{ subsubsection.id }}" aria-expanded="false" aria-controls="nestedCollapse-{{ subsubsection.id }}">
                                                     {{ subsubsection.title }}
                                                 </button>
                                             </h3>
-                                            <div id="nestedCollapse{{ subsubsection.id }}" class="accordion-collapse collapse" aria-labelledby="nestedHeading{{ subsubsection.id }}" data-bs-parent="#nestedAccordion{{ subsection.id }}">
+                                            <div id="nestedCollapse-{{ subsubsection.id }}" class="accordion-collapse collapse" aria-labelledby="nestedHeading{{ subsubsection.id }}" data-bs-parent="#nestedAccordion-{{ subsection.id }}">
                                                 <div class="accordion-body">
                                                     <div class="sub-subsection-content">
                                                         {{ subsubsection.content|safe }}
@@ -108,5 +114,33 @@
         {% endif %}
     </div>
 </section>
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (window.location.hash) {
+            var hash = window.location.hash.substring(1); // Remove the #
+            var element = document.getElementById(hash);
+            if (element) {
+                var button = element.querySelector('.accordion-button');
+                if (button) {
+                    button.click();
+                }
+                // Add a slight delay to ensure the DOM is fully loaded
+                setTimeout(function() {
+                    // Calculate the offset for the sticky navbar
+                    var offset = 100; // Adjust this value based on your navbar height
+                    var elementPosition = element.getBoundingClientRect().top;
+                    var offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }, 300); // Adjust the delay time if necessary
+            }
+        }
+    });
+</script>
+{% endblock %}
 
 {% endblock %}

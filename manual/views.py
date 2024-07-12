@@ -28,36 +28,35 @@ def build_hierarchy(sections):
     """
     Build a hierarchy of sections and subsections.
     """
-    # Create a dictionary of section IDs to section objects
-    section_dict = {section.id: section for section in sections}
+    return sections
 
-    for section in sections:
-        section.subsections = []
+def build_subsection_hierarchy(subsections):
+    """
+    Build a hierarchy of subsections.
+    """
+    # Create a dictionary to map subsections by their IDs
+    subsection_dict = {subsection.id: subsection for subsection in subsections}
 
-    # Fetch all subsections for the given sections
-    subsections = Subsection.objects.filter(section__in=sections).order_by(
-        'title')
+    # Initialize a list to hold the root subsections
+    root_subsections = []
 
+    # Iterate over each subsection
     for subsection in subsections:
-        subsection.subsections = []
+        # Ensure the subsections attribute is set for each subsection
+        setattr(subsection, 'subsections', [])
+        # Check if the subsection has a parent
         if subsection.parent_id:
-            # Check if parent_id is in section_dict before appending
-            if subsection.parent_id in section_dict:
-                section_dict[subsection.parent_id].subsections.append(
-                    subsection)
-            else:
-                print(
-                    f"Warning: Subsection {subsection.id} has parent {subsection.parent_id} which is not in section_dict")
+            # Get the parent subsection from the dictionary
+            parent = subsection_dict[subsection.parent_id]
+            # Append the current subsection to the parent's subsections list
+            if not hasattr(parent, 'subsections'):
+                setattr(parent, 'subsections', [])
+            parent.subsections.append(subsection)
         else:
-            # Check if section_id is in section_dict before appending
-            if subsection.section_id in section_dict:
-                section_dict[subsection.section_id].subsections.append(
-                    subsection)
-            else:
-                print(
-                    f"Warning: Subsection {subsection.id} has section {subsection.section_id} which is not in section_dict")
+            # If no parent, it's a root subsection, so add it to the root list
+            root_subsections.append(subsection)
 
-    return list(section_dict.values())
+    return root_subsections
 
 
 def section_list(request):
@@ -72,6 +71,19 @@ def section_list(request):
     # Convert queryset to list
     sections = list(sections)
 
+    # Fetch subsections and build hierarchy
+    subsections = Subsection.objects.all().select_related('section', 'parent')
+    subsection_dict = {}
+    for subsection in subsections:
+        if subsection.section_id not in subsection_dict:
+            subsection_dict[subsection.section_id] = []
+        subsection_dict[subsection.section_id].append(subsection)
+
+    for section in sections:
+        # Corrected attribute name to match the model's field
+        section.subsections = build_subsection_hierarchy(
+            subsection_dict.get(section.id, []))
+
     # Build hierarchical structure
     sections = build_hierarchy(sections)
 
@@ -83,6 +95,8 @@ def section_list(request):
                       'sections': sections,
                       'favourite_sections': favourites,
                   })
+
+
 
 
 def get_flat_subsections(section):

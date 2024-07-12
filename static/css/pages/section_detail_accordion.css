@@ -1,0 +1,296 @@
+/* Custom table styles */
+/* Custom styles for content */
+.content {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table-custom {
+    background-color: var(--secondary-color);
+}
+.table-custom th,
+.table-custom td {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--light-gray);
+}
+.table-sticky-first-column {
+    overflow-x: auto;
+    display: block;
+}
+.table-sticky-first-column th,
+.table-sticky-first-column td {
+    min-width: 120px;
+}
+.table-sticky-first-column th:first-child,
+.table-sticky-first-column td:first-child {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    left: 0;
+    background-color: var(--light-gray); /* Adjust as necessary */
+    z-index: 1;
+}
+.sticky-column {
+    background-color: var(--light-gray); /* Match with table header background */
+}
+
+/* Alert styles */
+.alert-custom {
+    background-color: var(--highlight-color);
+    color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+/* Card styles */
+.card {
+    background-color: var(--lightest-gray);
+    border: 1px solid var(--medium-gray);
+    border-radius: 0.25rem;
+}
+.card-body {
+    padding: 1rem;
+}
+.card-text {
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive adjustments */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Blockquote styles */
+.blockquote {
+    padding: 0.5rem 1rem;
+    margin: 0 0 1rem;
+    border-left: 0.25rem solid var(--highlight-color);
+    color: var(--primary-color);
+    background-color: var(--lightest-gray);
+}
+
+/* Backgrounds */
+.bg-light-grey {
+    background-color: var(--light-gray);
+}
+
+/* Chapter 7 */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--background-gray);
+}
+
+ul.checklist, ol.steps {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+ul.checklist li, ol.steps li {
+    margin-bottom: 0.5rem;
+}
+
+/* Styles for the main accordion */
+.accordion .accordion-item {
+    margin-bottom: 0.15rem;
+    border: 2px solid var(--highlight-color);
+    border-radius: 5px;
+}
+
+/* Styles for the nested accordion */
+.nested-accordion .accordion-item {
+    border: 2px inset var(--background-gray);
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Styles for nested accordion headers */
+.nested-accordion .accordion-header {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Floating Images */
+.img-float {
+    margin: 0.5rem;
+}
+
+.float-lg-left {
+    float: none;
+}
+
+.float-lg-right {
+    float: none;
+}
+.float-lg-right-big {
+    float: none;
+}
+
+@media (min-width: 992px) {
+    .float-lg-right {
+        float: right;
+        max-width: 30%;
+        margin-right: 1rem;
+    }
+    .float-lg-right-big {
+        float: right;
+        max-width: 100%;
+        margin-right: 1rem;
+    }
+    .float-lg-left {
+        float: left;
+        max-width: 30%;
+        margin-right: 1rem;
+    }
+
+    .img-float-container {
+        overflow: hidden;
+    }
+}
+
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center align images */
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    max-height: 200px; /* Limit height for smaller images */
+    object-fit: contain; /* Maintain aspect ratio without cropping */
+}
+
+/* Framed Images */
+.frame {
+    border: 1px solid var(--medium-gray);
+    border-radius: 8px; /* Adjust the roundness */
+    overflow: hidden;
+    padding: 8px; /* Padding within the frame */
+    background-color: var(--lightest-gray);
+    text-align: center; /* Center the image within the frame */
+}
+
+@media (max-width: 767px) {
+    .image-container {
+        justify-content: flex-start; /* Start align images on mobile */
+    }
+
+    .image-container img {
+        width: 100%; /* Ensure images take full width of container */
+        max-width: 100%; /* Reset max-width for mobile devices */
+        max-height: 100px; /* Reset max-height for mobile devices */
+    }
+
+    .section-description,
+    .subsection-body,
+    .table-custom th,
+    .table-custom td {
+        font-size: 0.9rem;
+    }
+
+    .table-custom th, .table-custom td {
+        padding: 0.5rem;
+    }
+    .img-float-wrapper {
+        width: 100%;
+        float: none;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    .img-side-by-side {
+        flex-direction: column;
+    }
+
+    .img-side-by-side figure {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+
+    .img-side-by-side img {
+        max-height: auto; /* Reset height for mobile view */
+    }
+}
+
+@media (max-width: 576px) {
+    .section-description,
+    .subsection-body,
+    .table-custom th,
+    .table-custom td {
+        font-size: 0.8rem;
+    }
+
+    .table-custom th, .table-custom td {
+        padding: 0.3rem;
+    }
+}
+
+.alert-custom {
+    padding: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    background-color: var(--highlight-color);
+    color: var(--secondary-color);
+}
+
+.alert-custom strong {
+    font-weight: bold;
+}
+
+.math-accordion-body {
+    overflow-x: auto;
+}
+
+/* Ensure text wraps around images on large screens */
+.img-float-wrapper {
+    float: right;
+    width: 10%;
+    margin-right: 1rem;
+}
+
+.img-float-frame {
+    width: 100%;
+    border: 1px solid var(--medium-gray);
+    border-radius: 8px;
+    padding: 8px;
+    background-color: var(--lightest-gray);
+
+}
+
+/* Side-by-Side Images */
+.img-side-by-side {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.img-side-by-side figure {
+    flex: 1 1 45%; /* Each image takes up to 45% of the container's width */
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-side-by-side img {
+    max-height: 150px; /* Adjust the height as needed */
+    object-fit: contain; /* Maintain aspect ratio and ensure the image fits within the height */
+    width: 100%; /* Ensure the image takes the full width of the container */
+    border: 1px solid var(--medium-gray);
+    border-radius: 8px;
+    padding: 8px;
+    background-color: var(--lightest-gray);
+}
+
+.img-float-frame figcaption {
+    max-width: 100%; /* Ensure the caption takes the full width of the container */
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+}

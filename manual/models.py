@@ -10,11 +10,13 @@ def clean_html(html_content):
         'p', 'br', 'div', 'span', 'img', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
         'th', 'tr', 'td', 'table', 'thead', 'tbody', 'sup', 'sub', 'ul', 'ol',
         'section', 'sup', 'sub', 'hr', 'blockquote', 'pre', 'code', 'a', 'li',
-        'caption', 'figure', 'figcaption', 'summary', 'details', 'article', 'button'
+        'caption', 'figure', 'figcaption', 'summary', 'details', 'article',
+        'button',
     ]
     allowed_attrs = {
         '*': ['class', 'style', 'src', 'href', 'alt', 'srcset', 'sizes',
-              'loading', 'accordion-button']
+              'loading', 'accordion-button', 'type', 'data-bs-toggle',
+              'data-bs-target', 'aria-expanded', 'aria-controls','id',]
     }
 
     cleaned_content = bleach.clean(html_content, tags=allowed_tags,

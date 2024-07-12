@@ -3,16 +3,7 @@
 <ul class="list-group">
     {% for subsection in subsections %}
         <li class="list-group-item">
-            <a href="{% url 'section_detail_accordion' subsection.id %}#subsection-{{ subsection.id }}">{{ subsection.title }}</a>
-            {% if subsection.subsections %}
-                <ul class="list-group">
-                    {% for subsubsection in subsection.subsections %}
-                        <li class="list-group-item">
-                            <a href="{% url 'section_detail_accordion' subsubsection.id %}#subsubsection-{{ subsubsection.id }}">{{ subsubsection.title }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+            <a href="{% url 'section_detail_accordion' subsection.section.id %}#subsection-{{ subsection.id }}">{{ subsection.title }}</a>
         </li>
     {% endfor %}
 </ul>
