@@ -26,11 +26,14 @@
                 <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#sectionsAccordion">
                     <div class="accordion-body">
                         <p>{{ section.description|safe }}</p>
-
-                        <!-- Added section link -->
                         <p><a href="{% url 'section_detail_accordion' section.id %}" class="btn btn-primary">Kapitel ansehen</a></p>
-                        <!-- Subsection links -->
-                        {% include 'manual/subsection_list.html' with subsections=section.subsections %}
+                        <ul class="list-group">
+                            {% for subsection in section.subsections %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'section_detail_accordion' subsection.section.id %}#subsection-{{ subsection.id }}">{{ subsection.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
 
                 </div>

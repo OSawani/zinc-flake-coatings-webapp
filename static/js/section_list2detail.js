@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Calculate the offset for the sticky navbar
                     const offset = 100; // Adjust this value based on your navbar height
                     const elementPosition = element.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    const offsetPosition = elementPosition + window.scrollY - offset;
 
                     window.scrollTo({
                         top: offsetPosition,

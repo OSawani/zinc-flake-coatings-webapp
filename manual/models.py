@@ -71,7 +71,7 @@ class Subsection(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('subsection_detail', args=[self.id])
+        return f"{self.section.get_absolute_url()}#subsection-{self.id}"
 
     class Meta:
         indexes = [

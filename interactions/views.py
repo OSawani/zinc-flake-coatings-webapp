@@ -94,14 +94,14 @@ def add_favourite(request, content_type, content_id):
 
     if existing_favourite:
         existing_favourite.delete()
-        messages.success(request, f'Entfernt "{content_name}" aus Ihren '
+        messages.success(request, f'Entfernt "{content}" aus Ihren '
                                   f'Favoriten.')
     else:
         if content_type == 'section':
             Favourite.objects.create(user=user, section=content)
         else:
             Favourite.objects.create(user=user, subsection=content)
-        messages.success(request, f'"{content_name}" zu Ihren Favoriten '
+        messages.success(request, f'"{content}" zu Ihren Favoriten '
                                   f'hinzugefügt.')
 
     return redirect(request.META.get('HTTP_REFERER',
@@ -174,11 +174,11 @@ def list_favourites(request):
 def dashboard(request):
     user = request.user
     favourite_sections = Favourite.objects.filter(user=user,
-                                                  section__isnull=False)
+                                                  section__isnull=False).order_by('section__title')
     favourite_subsections = Favourite.objects.filter(user=user,
-                                                     subsection__isnull=False)
+                                                     subsection__isnull=False).order_by('subsection__title')
     comments = user.comment_set.all()
-    sections = Section.objects.all()
+    sections = Section.objects.all().order_by('title')
 
 
     return render(request, 'interactions/dashboard.html', {
