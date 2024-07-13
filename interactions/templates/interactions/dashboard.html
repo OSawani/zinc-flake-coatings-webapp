@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 {% block title %}Dashboard - Zinc-Flake Coatings Manual{% endblock %}
 {% block content %}
-<main class="container mt-5">
+<main class="container mt-3">
+    <!-- Welcome Message -->
+    <div class="row">
+        <div class="col-12 text-center"> <!-- Full-width and centered text -->
+            <h2>Welcome, {{ user.first_name }}</h2>
+            <p>Here you can manage your favourites, comments, and browse content.</p>
+        </div>
+    </div>
     <div class="row">
         <!-- Navigation Sidebar -->
-        <div class="col-md-3">
-            <h2>Navigation</h2>
+        <div class="col-md-3 mb-4 mb-md-0">
             <ul class="list-group">
                 <li class="list-group-item"><a href="#" data-bs-toggle="modal" data-bs-target="#manualIndexModal">Manual Index</a></li>
                 <li class="list-group-item"><a href="#favourites">My Favourites</a></li>
@@ -15,17 +21,9 @@
 
         <!-- Dashboard Content -->
         <div id="dashboard-content" class="col-md-9">
-            <h2>Welcome, {{ user.first_name }}</h2>
-            <p>Here you can manage your favourites, comments, and browse content.</p>
-
-            <!-- Manual Index Modal Trigger -->
-            <div class="mt-5">
-                <h3>Manual Index</h3>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#manualIndexModal">View Manual Index</button>
-            </div>
 
             <!-- Favourites Section -->
-            <div id="favourites" class="mt-5">
+            <div id="favourites" class="section mt-8">
                 <h3>My Favourites</h3>
                 {% if favourite_sections or favourite_subsections %}
                     <div class="accordion" id="favouritesAccordion">
@@ -72,7 +70,7 @@
             </div>
 
             <!-- Comments Section -->
-            <div id="comments" class="mt-5">
+            <div id="comments" class="section mt-4">
                 <h3>My Comments</h3>
                 {% if comments %}
                 <ul class="list-group">

@@ -6,7 +6,8 @@
     font-family: 'Roboto', sans-serif;
     --primary-color: #000000; /* Primary black */
     --secondary-color: #FFFFFF; /* Primary white */
-    --highlight-color: #FF4610; /* Secondary highlight color */
+    --highlight-color: #FF4610;
+    --highlight-color-dark: #cc3a0d; /* Approximate darker shade of #FF4610 */
     --light-gray: #CBCBCB; /* Secondary light gray */
     --medium-gray: #D6D6D6; /* Tertiary medium gray */
     --lightest-gray: #DFDFDF; /* Tertiary lightest gray */
@@ -303,6 +304,16 @@ footer a:hover {
 
 .list-group-item {
     font-size: 1rem;
+    background-color: var(--background-gray);
+}
+.list-group-item a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.list-group-item a:hover {
+    color: var(--highlight-color);
+    text-decoration: underline;
 }
 
 /* Margin for content sections */
@@ -397,4 +408,37 @@ footer a:hover {
     margin-bottom: 15px;
     color: var(--primary-color);
 }
+
+/* Dashboard styles */
+/* Sidebar title styling */
+.sidebar-title {
+    font-size: 1.5rem; /* Increased font size for better visibility */
+    font-weight: bold; /* Bold text */
+    margin-bottom: 1rem; /* Margin below the title */
+}
+
+/* Section styling for consistent spacing and look */
+.section {
+    background-color: var(--background-gray); /* Background color */
+    padding: 20px; /* Padding inside the section */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle 3D effect */
+    margin-bottom: 20px; /* Margin below each section */
+}
+
+/* Centering text within the dashboard content */
+#dashboard-content h2,
+#dashboard-content p,
+#dashboard-content h3 {
+    text-align: center; /* Center-align text */
+
+/* Centering the button within the section */
+.section .center-button {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    flex-direction: column; /* Ensure vertical stacking */
+}
+
+
 

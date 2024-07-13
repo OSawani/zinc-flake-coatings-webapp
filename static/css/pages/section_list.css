@@ -44,3 +44,14 @@
     margin-left: 15px; /* Increase spacing between title and icon */
     text-decoration: none; /* Remove underline */
 }
+
+/* Use higher specificity to override anchor tag color */
+.favourite-icon .far.fa-star,
+.favourite-icon .fas.fa-star {
+    color: var(--medium-gray) !important; /* Default to medium-gray */
+}
+
+/* Color for liked icon (fas star) */
+.favourite-icon .fas.fa-star {
+    color: var(--highlight-color) !important; /* Use --highlight-color for liked icon */
+}

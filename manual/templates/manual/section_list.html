@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
-{% block title %}Sections{% endblock %}
+{% block title %}Handbuchkapitel{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/pages/section_list.css' %}">
 {% endblock %}
@@ -28,7 +28,7 @@
                         <p>{{ section.description|safe }}</p>
 
                         <!-- Added section link -->
-                        <p><a href="{% url 'section_detail_accordion' section.id %}">Kapitel ansehen</a></p>
+                        <p><a href="{% url 'section_detail_accordion' section.id %}" class="btn btn-primary">Kapitel ansehen</a></p>
                         <!-- Subsection links -->
                         {% include 'manual/subsection_list.html' with subsections=section.subsections %}
                     </div>
@@ -38,4 +38,5 @@
         {% endfor %}
     </div>
 </section>
+
 {% endblock %}

@@ -94,14 +94,15 @@ def add_favourite(request, content_type, content_id):
 
     if existing_favourite:
         existing_favourite.delete()
-        messages.success(request, f'Removed "{content_name}" from your '
-                                  f'favourites.')
+        messages.success(request, f'Entfernt "{content_name}" aus Ihren '
+                                  f'Favoriten.')
     else:
         if content_type == 'section':
             Favourite.objects.create(user=user, section=content)
         else:
             Favourite.objects.create(user=user, subsection=content)
-        messages.success(request, f'Added "{content_name}" to your favourites.')
+        messages.success(request, f'"{content_name}" zu Ihren Favoriten '
+                                  f'hinzugefügt.')
 
     return redirect(request.META.get('HTTP_REFERER',
                                      'redirect_if_referer_not_found'))
