@@ -1,15 +1,20 @@
 from django import template
-import re
 from django.utils.safestring import mark_safe
-
+from django.utils.html import strip_tags
+import re
 
 register = template.Library()
+
+@register.filter(name='strip_html')
+def strip_html(text):
+    return strip_tags(text)
 
 
 @register.filter(name='highlight')
 def highlight(text, query):
     if not query:
         return text
+    text = strip_tags(text)  # Strip HTML tags first
     pattern = re.compile(re.escape(query), re.IGNORECASE)
     # Replace matches with <mark> tags
     highlighted_text = pattern.sub(
@@ -17,12 +22,12 @@ def highlight(text, query):
     return mark_safe(highlighted_text)
 
 
-
 @register.filter(name='contextual_highlight')
 def contextual_highlight(text, query, context_length=100):
     if not query:
         return text
 
+    text = strip_tags(text)  # Strip HTML tags first
     pattern = re.compile(re.escape(query), re.IGNORECASE)
     matches = list(pattern.finditer(text))
 

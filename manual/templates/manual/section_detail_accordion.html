@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{ section.title }} - Zinc-Flake Coatings Manual{% endblock %}
+{% block title %}{{ section.title }} - Zinc-Flake Application Manual{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{%  static 'css/pages/section_detail_accordion.css' %}">
 {% endblock %}
@@ -14,7 +14,7 @@
 
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Startseite</a></li>
     <li class="breadcrumb-item"><a href="{% url 'section_list' %}">Handbuch</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{ section.title }}</li>
 </ol>
@@ -101,7 +101,7 @@
                     {% if user == comment.user %}
                         <div class="btn-group float-end" role="group">
                             <button type="button" class="btn btn-secondary btn-sm" onclick="openEditModal('{{ comment.id }}', '{{ comment.content|escapejs }}')">Edit</button>
-                            <button type="button" class="btn btn-danger btn-sm" onclick="openDeleteModal('{{ comment.id }}')">Delete</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="openDeleteModal('{{ comment.id }}')">Löschen</button>
                         </div>
                     {% endif %}
                 </li>
@@ -111,12 +111,12 @@
             <p>Noch keine Kommentare.</p>
         {% endif %}
 
-        <h3>Haben Sie ein konstruktives Feedback?</h3>
+        <h3>Haben Sie konstruktives Feedback?</h3>
         {% if user.is_authenticated %}
             {% if not email_verified %}
-                <p>Please verify your email to leave a comment. <a href="{% url 'account_email' %}">Request verification</a></p>
+                <p>Bitte bestätigen Sie Ihre E-Mail-Adresse, um einen Kommentar zu hinterlassen. <a href="{% url 'account_email' %}">Bestätigung E-Mail anfordern</a></p>
             {% elif not user.is_approved %}
-                <p>Please wait for admin approval to be able to comment on content.</p>
+                <p>Bitte warten Sie auf die Freigabe durch unser Team, um Inhalte kommentieren zu können.</p>
             {% else %}
                 <form class="mt-3" method="post" action="{% url 'add_comment_to_section' section.id %}">
                     {% csrf_token %}
@@ -125,7 +125,7 @@
                 </form>
             {% endif %}
         {% else %}
-            <p><a href="{% url 'account_login' %}?next={{ request.path }}">Log in</a> to leave a comment.</p>
+            <p><a href="{% url 'account_login' %}?next={{ request.path }}">Einloggen</a>  um einen Kommentar zu hinterlassen.</p>
         {% endif %}
     </div>
 </section>
@@ -137,15 +137,15 @@
             <form method="post" id="editCommentForm">
                 {% csrf_token %}
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editCommentModalLabel">Edit Comment</h5>
+                    <h5 class="modal-title" id="editCommentModalLabel">Kommentare bearbeiten</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <textarea name="content" class="form-control" id="editCommentContent"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-primary">Änderungen speichern</button>
                 </div>
             </form>
         </div>
@@ -159,15 +159,15 @@
             <form method="post" id="deleteCommentForm">
                 {% csrf_token %}
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteCommentModalLabel">Delete Comment</h5>
+                    <h5 class="modal-title" id="deleteCommentModalLabel">Kommentar löschen</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete this comment?</p>
+                    <p>Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-danger">Löschen</button>
                 </div>
             </form>
         </div>

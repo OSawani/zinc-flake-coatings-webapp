@@ -32,14 +32,14 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                            <a class="nav-link" href="{% url 'home' %}">Startseite</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'section_list' %}">Inhalt</a>
                         </li>
                         {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                            <a class="nav-link" href="{% url 'dashboard' %}">Mein Bereich</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'account_logout' %}">Ausloggen</a>
@@ -60,7 +60,7 @@
         <!-- Search Bar -->
         <div class="search-bar">
             <form action="{% url 'search_results' %}" method="get" class="search-form">
-                <input type="search" name="q" placeholder="Search..." aria-label="Search">
+                <input type="search" name="q" placeholder="Suchen..." aria-label="Search">
             </form>
         </div>
         
@@ -87,18 +87,18 @@
             <div class="container text-center">
                 <p>&copy; 2024 Zinc-Flake Anwendungshandbuch.</p>
                 <p>
-                    <a href="https://www.doerken.com/de/de/agb">AGB</a> |
-                    <a href="https://www.doerken.com/de/de/impressum">Impressum</a> |
-                    <a href="https://www.doerken.com/de/de/datenschutz">Datenschutz</a>
+                    <a href="https://www.doerken.com/de/de/agb" rel="noopener noreferrer" target="_blank">AGB</a> |
+                    <a href="https://www.doerken.com/de/de/impressum" rel="noopener noreferrer"  target="_blank">Impressum</a> |
+                    <a href="https://www.doerken.com/de/de/datenschutz" rel="noopener noreferrer"  target="_blank">Datenschutz</a>
                 </p>
                 <div class="social-links">
-                <a href="https://www.youtube.com/channel/UCD6y0sBcVBNV_ovWbpl7QZg" class="social-icon" target="_blank">
+                <a href="https://www.youtube.com/channel/UCD6y0sBcVBNV_ovWbpl7QZg" rel="noopener noreferrer" class="social-icon" target="_blank">
                     <i class="fab fa-youtube"></i>
                 </a>
-                <a href="https://www.linkedin.com/company/18038750/admin/updates/" class="social-icon" target="_blank">
+                <a href="https://de.linkedin.com/company/doerkencoatings" rel="noopener noreferrer" class="social-icon" target="_blank">
                     <i class="fab fa-linkedin"></i>
                 </a>
-                <a href="https://www.xing.com/companies/d%C3%B6rkengruppe%2Fewaldd%C3%B6rkenag" class="social-icon" target="_blank">
+                <a href="https://www.xing.com/pages/doerken" rel="noopener noreferrer" class="social-icon" target="_blank">
                     <i class="fab fa-xing"></i>
                 </a>
         </div>

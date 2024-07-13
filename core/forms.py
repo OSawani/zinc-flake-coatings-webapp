@@ -1,16 +1,18 @@
 from django import forms
 from allauth.account.forms import SignupForm
+from django.utils.translation import gettext_lazy as _
 from .models import Company
 
 
 class CustomSignupForm(SignupForm):
     email = forms.EmailField(required=True)
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField(required=True)
+    first_name = forms.CharField(label=_('Vorname'), required=True)
+    last_name = forms.CharField(label=_('Nachname'), required=True)
     company = forms.ModelChoiceField(
         queryset=Company.objects.all(),
+        label=_('Firma'),
         required=True,
-        empty_label='Select a company'
+        empty_label='Firma auswählen'
     )
 
     def save(self, request):

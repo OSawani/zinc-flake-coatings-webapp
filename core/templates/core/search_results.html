@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 {% load highlight %}
-{% block title %}Search Results{% endblock %}
+{% block title %}Suchergebnisse{% endblock %}
 {% block content %}
 <div class="content-container mt-3">
-    <h1>Search Results for "{{ query }}"</h1>
+    <h1>Suchergebnisse für "{{ query }}"</h1>
     {% if page_obj.has_other_pages %}
         <div class="pagination">
             <span class="step-links">
                 {% if page_obj.has_previous %}
-                    <a href="?q={{ query }}&page=1">&laquo; first</a>
-                    <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">previous</a>
+                    <a href="?q={{ query }}&page=1">&laquo; erste</a>
+                    <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">Zurück</a>
                 {% endif %}
                 <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    Seite {{ page_obj.number }} von {{ page_obj.paginator.num_pages }}.
                 </span>
                 {% if page_obj.has_next %}
-                    <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?q={{ query }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">Weiter</a>
+                    <a href="?q={{ query }}&page={{ page_obj.paginator.num_pages }}">letzte &raquo;</a>
                 {% endif %}
             </span>
         </div>
@@ -26,15 +26,15 @@
             <li class="search-result-item">
                 <a href="{{ result.get_absolute_url }}" class="search-result-link">{{ result.title|highlight:query }}</a>
                 {% if result.description %}
-                    <p>{{ result.description|contextual_highlight:query|safe }}</p>
+                    <p>{{ result.description|strip_html|truncatechars:800|contextual_highlight:query|safe }}</p>
                 {% endif %}
                 {% if result.content %}
-                    <p>{{ result.content|contextual_highlight:query|safe }}</p>
+                    <p>{{ result.content|strip_html|truncatechars:800|contextual_highlight:query|safe }}</p>
                 {% endif %}
             </li>
         {% endfor %}
     </ul>
     {% if not page_obj %}
-        <p>No results found.</p>
+        <p>Keine Ergebnisse gefunden</p>
     {% endif %}
 {% endblock %}
