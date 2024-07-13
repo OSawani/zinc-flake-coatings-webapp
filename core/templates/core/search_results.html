@@ -2,7 +2,8 @@
 {% load highlight %}
 {% block title %}Search Results{% endblock %}
 {% block content %}
-    <h2>Search Results for "{{ query }}"</h2>
+<div class="content-container mt-3">
+    <h1>Search Results for "{{ query }}"</h1>
     {% if page_obj.has_other_pages %}
         <div class="pagination">
             <span class="step-links">
@@ -23,7 +24,7 @@
     <ul class="search-results">
         {% for result in page_obj %}
             <li class="search-result-item">
-                <a href="{{ result.get_absolute_url }}">{{ result.title|highlight:query }}</a>
+                <a href="{{ result.get_absolute_url }}" class="search-result-link">{{ result.title|highlight:query }}</a>
                 {% if result.description %}
                     <p>{{ result.description|contextual_highlight:query|safe }}</p>
                 {% endif %}

@@ -1,5 +1,7 @@
 from django import template
 import re
+from django.utils.safestring import mark_safe
+
 
 register = template.Library()
 
@@ -9,8 +11,11 @@ def highlight(text, query):
     if not query:
         return text
     pattern = re.compile(re.escape(query), re.IGNORECASE)
-    return pattern.sub(lambda match: '<mark>{}</mark>'.format(match.group()),
-                       text)
+    # Replace matches with <mark> tags
+    highlighted_text = pattern.sub(
+        lambda match: '<mark>{}</mark>'.format(match.group()), text)
+    return mark_safe(highlighted_text)
+
 
 
 @register.filter(name='contextual_highlight')
@@ -19,7 +24,10 @@ def contextual_highlight(text, query, context_length=100):
         return text
 
     pattern = re.compile(re.escape(query), re.IGNORECASE)
-    matches = pattern.finditer(text)
+    matches = list(pattern.finditer(text))
+
+    if not matches:
+        return text
 
     snippets = []
     for match in matches:
@@ -40,4 +48,4 @@ def contextual_highlight(text, query, context_length=100):
 
         snippets.append(snippet)
 
-    return ' '.join(snippets)
+    return mark_safe(' '.join(snippets))
