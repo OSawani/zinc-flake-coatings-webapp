@@ -431,6 +431,7 @@ footer a:hover {
 #dashboard-content p,
 #dashboard-content h3 {
     text-align: center; /* Center-align text */
+}
 
 /* Centering the button within the section */
 .section .center-button {
@@ -442,3 +443,104 @@ footer a:hover {
 
 
 
+/* Specific styles for auth forms */
+.auth-form-container h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--highlight-color);
+    padding-bottom: 10px;
+
+}
+
+/* Specific styles for auth forms */
+.auth-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: var(--background-gray);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form-container h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.auth-form-container input[type="text"],
+.auth-form-container input[type="password"],
+.auth-form-container input[type="email"],
+.auth-form-container select {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    border: 1px solid var(--light-gray);
+    background-color: var(--secondary-color);
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.auth-form-container input[type="text"]:focus,
+.auth-form-container input[type="password"]:focus,
+.auth-form-container input[type="email"]:focus,
+.auth-form-container select:focus {
+    border-color: var(--highlight-color);
+    outline: none;
+}
+
+.auth-form-container label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.auth-form-container .form-check-label {
+    font-weight: normal;
+    color: var(--primary-color);
+}
+
+.auth-form-container button[type="submit"] {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1.2rem;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--secondary-color);
+    transition: background-color 0.3s ease;
+}
+
+.auth-form-container button[type="submit"]:hover,
+.auth-form-container button[type="submit"]:focus,
+.auth-form-container button[type="submit"]:active {
+    background-color: var(--highlight-color);
+    border-color: var(--highlight-color);
+}
+
+.auth-form-container .alert {
+    font-size: 0.875rem;
+}
+
+.auth-form-container a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.auth-form-container a:hover {
+    text-decoration: underline;
+}
+
+.text-register {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.text-register:hover {
+    color: var(--highlight-color);
+    text-decoration: underline;
+}

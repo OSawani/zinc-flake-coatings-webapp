@@ -1,18 +1,20 @@
 {% extends "base.html" %}
 
 {% block head_title %}
-    Sign Out
+    Abmelden
 {% endblock head_title %}
 
 {% block content %}
-    <h1>Ausloggen</h1>
-    <p>Sind Sie sicher, dass Sie sich abmelden wollen?</p>
-    
-    {% url 'account_logout' as action_url %}
-    
-    <form method="post" action="{{ action_url }}">
-        {% csrf_token %}
-        {{ redirect_field }}
-        <button type="submit">Abmelden</button>
-    </form>
+    <div class="auth-form-container mt-3">
+        <h1>Ausloggen</h1>
+        <p>Sind Sie sicher, dass Sie sich abmelden wollen?</p>
+        
+        {% url 'account_logout' as action_url %}
+        
+        <form method="post" action="{{ action_url }}">
+            {% csrf_token %}
+            {{ redirect_field }}
+            <button type="submit" class="btn btn-primary">Abmelden</button>
+        </form>
+    </div>
 {% endblock content %}

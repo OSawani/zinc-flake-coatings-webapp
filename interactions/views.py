@@ -79,12 +79,8 @@ def delete_comment(request, comment_id):
 @login_required
 def add_favourite(request, content_type, content_id):
     user = request.user
-    content_name = ''  # initialise to fix bug UnboundLocalError at
-    # /interactions/favourites/add/subsection/1/ cannot access local
-    # variable 'content_name' where it is not associated with a value
     if content_type == 'section':
         content = get_object_or_404(Section, id=content_id)
-        content_name = content.title
         existing_favourite = Favourite.objects.filter(user=user,
                                                       section=content).first()
     else:

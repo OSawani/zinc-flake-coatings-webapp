@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Einloggen{% endblock %}
 
 {% block content %}
-<div class="container mt-3">
-    <h2>Login</h2>
+<div class="auth-form-container mt-3">
+    <h1>Einloggen</h1>
     <form method="post" action="{% url 'account_login' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary">Einloggen</button>
     </form>
-    <p><a href="{% url 'account_signup' %}">Sie haben noch kein Konto? Konto anlegen</a></p>
-    <p><a href="{% url 'account_reset_password' %}">Passwort vergessen?</a></p>
+    <ul class="list-group mt-3 unstyled">
+        <li>
+            <a href="{% url 'account_signup' %}" class="text-primary">Sie haben noch kein Konto? Konto anlegen</a>
+
+        </li>
+        <li>
+            <a href="{% url 'account_reset_password' %}" class="text-register">Passwort vergessen?</a>
+        </li>
+    </ul>
+    
 </div>
 {% endblock %}

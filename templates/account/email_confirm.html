@@ -3,12 +3,12 @@
 {% block head_title %}Confirm E-mail Address{% endblock %}
 
 {% block content %}
-<div class="container mt-3">
+<div class="auth-form-container mt-3">
     <h1>E-mail Adresse bestätigen</h1>
     <p>Klicken Sie auf die untere Button, um Ihre E-Mail Adresse zu bestätigen.</p>
     <form method="post" action="">
         {% csrf_token %}
-        <button type="submit">E-mail bestätigen</button>
+        <button class="btn btn-primary" type="submit">E-mail bestätigen</button>
     </form>
 </div>
 {% endblock %}

@@ -84,13 +84,18 @@ def section_detail_accordion(request, section_id):
 
     form = CommentForm()
 
+    # Initialize empty lists for favourites if the user is not authenticated
+    favourite_sections = []
+    favourite_subsections = []
+
     # Get favourite sections and subsections for the logged-in user
-    favourite_sections = Favourite.objects.filter(user=request.user,
-                                                  section__isnull=False).values_list(
-        'section_id', flat=True)
-    favourite_subsections = Favourite.objects.filter(user=request.user,
-                                                     subsection__isnull=False).values_list(
-        'subsection_id', flat=True)
+    if request.user.is_authenticated:
+        favourite_sections = Favourite.objects.filter(user=request.user,
+                                                      section__isnull=False).values_list(
+            'section_id', flat=True)
+        favourite_subsections = Favourite.objects.filter(user=request.user,
+                                                         subsection__isnull=False).values_list(
+            'subsection_id', flat=True)
 
     return render(request, 'manual/section_detail_accordion.html', {
         'section': section,
