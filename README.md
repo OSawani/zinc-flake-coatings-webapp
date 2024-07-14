@@ -5,9 +5,10 @@ Welcome to,
 
 Live link - [flZn Application Manual](https://znfl-coatings-manual-c99fa7fb2727.herokuapp.com/)
 
-![Screenshot]
 
-Homepage - [Screenshot](docs/app_screenshots/homepage_desktop.png)
+
+Homepage
+![Screenshot](docs/app_screenshots/homepage_desktop.png)
 
 ## Introduction
 
@@ -174,7 +175,9 @@ The development of the web app is user-focused, prioritising ease of access, int
 - __Wireframes__
     - The wireframes were created using Figma to visualise the layout and structure of the website, including the home page, manual sections, and user profile.
 
-
+### Screenshots of Wireframes
+![Wireframes base](docs/wireframes/homepage.JPG)
+![Wireframes section list](docs/wireframes/manual.JPG)
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -229,142 +232,180 @@ A user dashboard displaying user-specific information, including favourites, com
 
 [Back to Table of Contents](#table-of-contents)
 
-### __Database Schema__
+### __Database Schema__ Models Overview
 
 The project consists of three apps: core, manual, and interactions. Each app contains several models that define the data schema. Below is a comprehensive description of each model, including their fields, relationships, cascading behaviors, constraints, and triggers.
 
-Core Models
-1. Company
+
+The project consists of three apps: core, manual, and interactions. Each app contains several models that define the data schema. Below is a comprehensive description of each model, including their fields, relationships, cascading behaviors, constraints, and triggers.
+
+#### Core Models
+
+##### 1. Company
+
 The Company model represents a company with a unique name.
 
-Fields:
-name (CharField): The name of the company (max_length=255, unique=True).
-created_at (DateTimeField): The date and time when the company was created (auto_now_add=True).
-updated_at (DateTimeField): The date and time when the company was last updated (auto_now=True).
-Relationships:
-One-to-Many with User (related_name='employees'): A company can have many employees.
-2. User
+###### Fields:
+- **name (CharField)**: The name of the company (max_length=255, unique=True).
+- **created_at (DateTimeField)**: The date and time when the company was created (auto_now_add=True).
+- **updated_at (DateTimeField)**: The date and time when the company was last updated (auto_now=True).
+
+###### Relationships:
+- **One-to-Many with User (related_name='employees')**: A company can have many employees.
+
+##### 2. User
+
 The User model extends the default Django AbstractUser model, using email as the username field and including additional fields.
 
-Fields:
-first_name (CharField): The first name of the user (max_length=100).
-last_name (CharField): The last name of the user (max_length=100).
-email (EmailField): The unique email address of the user (unique=True).
-is_approved (BooleanField): The approval status of the user (default=False).
-company (ForeignKey to Company): The company to which the user belongs (on_delete=models.SET_NULL, null=True, blank=True, related_name='employees').
-created_at (DateTimeField): The date and time when the user was created (auto_now_add=True).
-updated_at (DateTimeField): The date and time when the user was last updated (auto_now=True).
-groups (ManyToManyField to auth.Group): The groups this user belongs to (related_name='custom_user_set', blank=True).
-user_permissions (ManyToManyField to auth.Permission): Specific permissions for this user (related_name='custom_user_permissions_set', blank=True).
-Relationships:
-Many-to-One with Company (related_name='employees'): Many users can belong to one company.
-Many-to-Many with auth.Group (related_name='custom_user_set'): A user can belong to many groups.
-Many-to-Many with auth.Permission (related_name='custom_user_permissions_set'): A user can have many permissions.
-Triggers:
-send_approval_email(): Sends an approval email to the user notifying them that their account has been approved.
-Manual Models
-1. Section
+###### Fields:
+- **first_name (CharField)**: The first name of the user (max_length=100).
+- **last_name (CharField)**: The last name of the user (max_length=100).
+- **email (EmailField)**: The unique email address of the user (unique=True).
+- **is_approved (BooleanField)**: The approval status of the user (default=False).
+- **company (ForeignKey to Company)**: The company to which the user belongs (on_delete=models.SET_NULL, null=True, blank=True, related_name='employees').
+- **created_at (DateTimeField)**: The date and time when the user was created (auto_now_add=True).
+- **updated_at (DateTimeField)**: The date and time when the user was last updated (auto_now=True).
+- **groups (ManyToManyField to auth.Group)**: The groups this user belongs to (related_name='custom_user_set', blank=True).
+- **user_permissions (ManyToManyField to auth.Permission)**: Specific permissions for this user (related_name='custom_user_permissions_set', blank=True).
+
+###### Relationships:
+- **Many-to-One with Company (related_name='employees')**: Many users can belong to one company.
+- **Many-to-Many with auth.Group (related_name='custom_user_set')**: A user can belong to many groups.
+- **Many-to-Many with auth.Permission (related_name='custom_user_permissions_set')**: A user can have many permissions.
+
+###### Triggers:
+- **send_approval_email()**: Sends an approval email to the user notifying them that their account has been approved.
+
+#### Manual Models
+
+##### 1. Section
+
 The Section model represents a section with a title, description, author, and timestamps.
 
-Fields:
-title (CharField): The title of the section (max_length=255).
-description (TextField): The description of the section (null=True, blank=True).
-author (ForeignKey to core.User): The author of the section (on_delete=models.SET_NULL, null=True, blank=True, related_name='sections').
-created_at (DateTimeField): The date and time when the section was created (auto_now_add=True).
-updated_at (DateTimeField): The date and time when the section was last updated (auto_now=True).
-css_path (CharField): The path to the CSS file for the section (null=True, blank=True).
-Relationships:
-One-to-Many with Subsection (related_name='sub_sections', on_delete=models.CASCADE): A section can have many subsections.
-One-to-Many with ContentVersion (related_name='versions', on_delete=models.CASCADE): A section can have many content versions.
-One-to-Many with Comment (related_name='comments', on_delete=models.CASCADE): A section can have many comments.
-Many-to-Many with Favourite (related_name='favourites'): A section can be favourited by many users.
-Constraints:
-Unique constraint on title.
-2. Subsection
+##### Fields:
+- **title (CharField)**: The title of the section (max_length=255).
+- **description (TextField)**: The description of the section (null=True, blank=True).
+- **author (ForeignKey to core.User)**: The author of the section (on_delete=models.SET_NULL, null=True, blank=True, related_name='sections').
+- **created_at (DateTimeField)**: The date and time when the section was created (auto_now_add=True).
+- **updated_at (DateTimeField)**: The date and time when the section was last updated (auto_now=True).
+- **css_path (CharField)**: The path to the CSS file for the section (null=True, blank=True).
+
+##### Relationships:
+- **One-to-Many with Subsection (related_name='sub_sections', on_delete=models.CASCADE)**: A section can have many subsections.
+- **One-to-Many with ContentVersion (related_name='versions', on_delete=models.CASCADE)**: A section can have many content versions.
+- **One-to-Many with Comment (related_name='comments', on_delete=models.CASCADE)**: A section can have many comments.
+- **Many-to-Many with Favourite (related_name='favourites')**: A section can be favourited by many users.
+
+##### Constraints:
+- Unique constraint on title.
+
+##### 2. Subsection
+
 The Subsection model represents a subsection within a section, with a possible parent subsection, author, title, content, and timestamps.
 
-Fields:
-section (ForeignKey to Section): The section to which this subsection belongs (on_delete=models.CASCADE, related_name='sub_sections').
-parent (ForeignKey to self): The parent subsection of this subsection (null=True, blank=True, on_delete=models.CASCADE, related_name='sub_sections').
-author (ForeignKey to core.User): The author of the subsection (on_delete=models.SET_NULL, null=True, blank=True, related_name='sub_sections').
-title (CharField): The title of the subsection (max_length=255).
-content (TextField): The content of the subsection (null=True, blank=True).
-created_at (DateTimeField): The date and time when the subsection was created (auto_now_add=True).
-updated_at (DateTimeField): The date and time when the subsection was last updated (auto_now=True).
-Relationships:
-Many-to-One with Section (related_name='sub_sections'): Many subsections can belong to one section.
-Many-to-One with self (related_name='sub_sections'): Many subsections can have a parent subsection.
-One-to-Many with ContentVersion (related_name='versions', on_delete=models.CASCADE): A subsection can have many content versions.
-One-to-Many with Comment (related_name='comments', on_delete=models.CASCADE): A subsection can have many comments.
-Many-to-Many with Favourite (related_name='favourites'): A subsection can be favourited by many users.
-Constraints:
-Unique constraint on title within the same section.
-Triggers:
-save(): Cleans HTML content before saving the subsection.
-3. ContentVersion
+##### Fields:
+- **section (ForeignKey to Section)**: The section to which this subsection belongs (on_delete=models.CASCADE, related_name='sub_sections').
+- **parent (ForeignKey to self)**: The parent subsection of this subsection (null=True, blank=True, on_delete=models.CASCADE, related_name='sub_sections').
+- **author (ForeignKey to core.User)**: The author of the subsection (on_delete=models.SET_NULL, null=True, blank=True, related_name='sub_sections').
+- **title (CharField)**: The title of the subsection (max_length=255).
+- **content (TextField)**: The content of the subsection (null=True, blank=True).
+- **created_at (DateTimeField)**: The date and time when the subsection was created (auto_now_add=True).
+- **updated_at (DateTimeField)**: The date and time when the subsection was last updated (auto_now=True).
+
+##### Relationships:
+- **Many-to-One with Section (related_name='sub_sections')**: Many subsections can belong to one section.
+- **Many-to-One with self (related_name='sub_sections')**: Many subsections can have a parent subsection.
+- **One-to-Many with ContentVersion (related_name='versions', on_delete=models.CASCADE)**: A subsection can have many content versions.
+- **One-to-Many with Comment (related_name='comments', on_delete=models.CASCADE)**: A subsection can have many comments.
+- **Many-to-Many with Favourite (related_name='favourites')**: A subsection can be favourited by many users.
+
+##### Constraints:
+- Unique constraint on title within the same section.
+
+##### Triggers:
+- **save()**: Cleans HTML content before saving the subsection.
+
+##### 3. ContentVersion
+
 The ContentVersion model represents a version of content within a subsection, including the version number, content, author, and timestamps.
 
-Fields:
-subsection (ForeignKey to Subsection): The subsection to which this version belongs (on_delete=models.CASCADE, related_name='versions').
-section (ForeignKey to Section): The section to which this version belongs (on_delete=models.CASCADE, null=True, blank=True, related_name='versions').
-version_number (IntegerField): The version number of the content.
-content (TextField): The content of the version.
-author (ForeignKey to core.User): The author of the content version (on_delete=models.SET_NULL, null=True, blank=True, related_name='published_versions').
-created_at (DateTimeField): The date and time when the content version was created (auto_now_add=True).
-updated_at (DateTimeField): The date and time when the content version was last updated (auto_now=True).
-Relationships:
-Many-to-One with Subsection (related_name='versions'): Many content versions can belong to one subsection.
-Many-to-One with Section (related_name='versions'): Many content versions can belong to one section.
-Constraints:
-Unique constraint on version_number within the same subsection.
-Interactions Models
-1. Comment
+##### Fields:
+- **subsection (ForeignKey to Subsection)**: The subsection to which this version belongs (on_delete=models.CASCADE, related_name='versions').
+- **section (ForeignKey to Section)**: The section to which this version belongs (on_delete=models.CASCADE, null=True, blank=True, related_name='versions').
+- **version_number (IntegerField)**: The version number of the content.
+- **content (TextField)**: The content of the version.
+- **author (ForeignKey to core.User)**: The author of the content version (on_delete=models.SET_NULL, null=True, blank=True, related_name='published_versions').
+- **created_at (DateTimeField)**: The date and time when the content version was created (auto_now_add=True).
+- **updated_at (DateTimeField)**: The date and time when the content version was last updated (auto_now=True).
+
+##### Relationships:
+- **Many-to-One with Subsection (related_name='versions')**: Many content versions can belong to one subsection.
+- **Many-to-One with Section (related_name='versions')**: Many content versions can belong to one section.
+
+##### Constraints:
+- Unique constraint on version_number within the same subsection.
+
+#### Interactions Models
+
+##### 1. Comment
+
 The Comment model represents a comment made by a user on a section or subsection, including the content, approval status, and timestamps.
 
-Fields:
-user (ForeignKey to core.User): The user who made the comment (on_delete=models.CASCADE).
-section (ForeignKey to manual.Section): The section the comment is related to (on_delete=models.CASCADE, null=True, blank=True, related_name='comments').
-subsection (ForeignKey to manual.Subsection): The subsection the comment is related to (on_delete=models.CASCADE, null=True, blank=True, related_name='comments').
-content (TextField): The content of the comment.
-approved (BooleanField): The approval status of the comment (default=True).
-created_at (DateTimeField): The date and time when the comment was created (auto_now_add=True).
-updated_at (DateTimeField): The date and time when the comment was last updated (auto_now=True).
-Relationships:
-Many-to-One with User (related_name='comments'): Many comments can be made by one user.
-Many-to-One with Section (related_name='comments'): Many comments can be related to one section.
-Many-to-One with Subsection (related_name='comments'): Many comments can be related to one subsection.
-Constraints:
-None.
-2. Favourite
+##### Fields:
+- **user (ForeignKey to core.User)**: The user who made the comment (on_delete=models.CASCADE).
+- **section (ForeignKey to manual.Section)**: The section the comment is related to (on_delete=models.CASCADE, null=True, blank=True, related_name='comments').
+- **subsection (ForeignKey to manual.Subsection)**: The subsection the comment is related to (on_delete=models.CASCADE, null=True, blank=True, related_name='comments').
+- **content (TextField)**: The content of the comment.
+- **approved (BooleanField)**: The approval status of the comment (default=True).
+- **created_at (DateTimeField)**: The date and time when the comment was created (auto_now_add=True).
+- **updated_at (DateTimeField)**: The date and time when the comment was last updated (auto_now=True).
+
+##### Relationships:
+- **Many-to-One with User (related_name='comments')**: Many comments can be made by one user.
+- **Many-to-One with Section (related_name='comments')**: Many comments can be related to one section.
+- **Many-to-One with Subsection (related_name='comments')**: Many comments can be related to one subsection.
+
+##### Constraints:
+- None.
+
+##### 2. Favourite
+
 The Favourite model represents a user's favourite section or subsection, including timestamps.
 
-Fields:
-user (ForeignKey to core.User): The user who favourited the section or subsection (on_delete=models.CASCADE, related_name='favourites').
-section (ForeignKey to manual.Section): The section that was favourited (null=True, blank=True, on_delete=models.CASCADE, related_name='favourites').
-subsection (ForeignKey to manual.Subsection): The subsection that was favourited (null=True, blank=True, on_delete=models.CASCADE, related_name='favourites').
-created_at (DateTimeField): The date and time when the favourite was created (auto_now_add=True).
-updated_at (DateTimeField): The date and time when the favourite was last updated (auto_now=True).
-Relationships:
-Many-to-One with User (related_name='favourites'): Many favourites can be created by one user.
-Many-to-One with Section (related_name='favourites'): Many favourites can be related to one section.
-Many-to-One with Subsection (related_name='favourites'): Many favourites can be related to one subsection.
-Constraints:
-Unique constraint on the combination of user and section.
-Unique constraint on the combination of user and subsection.
-3. Notification
+##### Fields:
+- **user (ForeignKey to core.User)**: The user who favourited the section or subsection (on_delete=models.CASCADE, related_name='favourites').
+- **section (ForeignKey to manual.Section)**: The section that was favourited (null=True, blank=True, on_delete=models.CASCADE, related_name='favourites').
+- **subsection (ForeignKey to manual.Subsection)**: The subsection that was favourited (null=True, blank=True, on_delete=models.CASCADE, related_name='favourites').
+- **created_at (DateTimeField)**: The date and time when the favourite was created (auto_now_add=True).
+- **updated_at (DateTimeField)**: The date and time when the favourite was last updated (auto_now=True).
+
+##### Relationships:
+- **Many-to-One with User (related_name='favourites')**: Many favourites can be created by one user.
+- **Many-to-One with Section (related_name='favourites')**: Many favourites can be related to one section.
+- **Many-to-One with Subsection (related_name='favourites')**: Many favourites can be related to one subsection.
+
+##### Constraints:
+- Unique constraint on the combination of user and section.
+- Unique constraint on the combination of user and subsection.
+
+##### 3. Notification
+
 The Notification model represents a notification sent to a user, including the type, message, send status, and timestamps.
 
-Fields:
-user (ForeignKey to core.User): The user who receives the notification (on_delete=models.CASCADE, related_name='notifications').
-type (CharField): The type of notification (max_length=100).
-message (TextField): The message content of the notification.
-sent (BooleanField): The send status of the notification (default=False).
-created_at (DateTimeField): The date and time when the notification was created (auto_now_add=True).
-updated_at (DateTimeField): The date and time when the notification was last updated (auto_now=True).
-Relationships:
-Many-to-One with User (related_name='notifications'): Many notifications can be sent to one user.
-Constraints:
-None.
+##### Fields:
+- **user (ForeignKey to core.User)**: The user who receives the notification (on_delete=models.CASCADE, related_name='notifications').
+- **type (CharField)**: The type of notification (max_length=100).
+- **message (TextField)**: The message content of the notification.
+- **sent (BooleanField)**: The send status of the notification (default=False).
+- **created_at (DateTimeField)**: The date and time when the notification was created (auto_now_add=True).
+- **updated_at (DateTimeField)**: The date and time when the notification was last updated (auto_now=True).
+
+##### Relationships:
+- **Many-to-One with User (related_name='notifications')**: Many notifications can be sent to one user.
+
+##### Constraints:
+- None.
+
 
 [Back to Table of Contents](#table-ofcontents)
 
@@ -410,7 +451,8 @@ python manage.py test --keepdb
 2. Users can add, edit, and delete comments on sections if they are verified and approved.
 3. The application handles user authentication and permissions properly for comment-related actions.
 
-Screenshot of the test results: [Test Results](docs/automated_tests/test_run_pycharm_terminal.png)
+Screenshot of the test results: 
+![Test Results](docs/automated_tests/test_run_pycharm_terminal.png)
 
 #### Manual Testing
 
@@ -460,12 +502,12 @@ Manually triggered errors (e.g., invalid form submissions, unauthorized actions)
 
 Screenshots:
 
-[Core app, models](docs/python_ci_linter/core_models.png)
-[Core app, views](docs/python_ci_linter/core_views.png)
-[Interactions app, models](docs/python_ci_linter/interactions_models.png)
-[Interactions app, views](docs/python_ci_linter/interactions_views.png)
-[Manual app, models](docs/python_ci_linter/manual_models.png)
-[Manual app, views](docs/python_ci_linter/manual_views.png)
+![Core app, models](docs/python_ci_linter/core_models.png)
+![Core app, views](docs/python_ci_linter/core_views.png)
+![Interactions app, models](docs/python_ci_linter/interactions_models.png)
+![Interactions app, views](docs/python_ci_linter/interactions_views.png)
+![Manual app, models](docs/python_ci_linter/manual_models.png)
+![Manual app, views](docs/python_ci_linter/manual_views.png)
 
 ##### E501 line too long (117 > 79 characters)
 - **Cause:** Lines exceeding the maximum recommended length of 79 characters, affecting readability.
@@ -473,23 +515,23 @@ Screenshots:
 
 #### HTML Validation 
 Screenshot:
-[HTML Validation by URL](docs/html_validator/project_html_url.png)
-[HTML Validation by source code](docs/html_validator/project_logged_in_source.png)
+![HTML Validation by URL](docs/html_validator/project_html_url.png)
+![HTML Validation by source code](docs/html_validator/project_logged_in_source.png)
 
 
 #### CSS Validation 
 Screenshot: 
-[CSS Validation](docs/css_validator/project_css.png)
+![CSS Validation](docs/css_validator/project_css.png)
 
 #### JS Validation 
 Screenshot:
-[JS Validation Comments Popup](docs/js_shint/jshint_comments_js.png)
-[JS Validation Comments Popup](docs/js_shint/jshint_section_to_list_js.png)
+![JS Validation Comments Popup](docs/js_shint/jshint_comments_js.png)
+![JS Validation Comments Popup](docs/js_shint/jshint_section_to_list_js.png)
 
 #### Lighthouse Report 
 Screenshot:
-[Lighthouse Report](docs/lighthouse/page_1_overall_score.png)
-[Download Report](docs/lighthouse/incognito_heroku.pdf)
+![Lighthouse Report](docs/lighthouse/page_1_overall_score.png)
+![Download Report](docs/lighthouse/incognito_heroku.pdf)
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -497,22 +539,23 @@ Screenshot:
 [Back to Table of Contents](#table-of-contents)
 
 ## Bugs
-- Throughout the development process, several bugs were encountered and resolved. Below is a list of notable bugs and their resolutions:
-- Resolved bugs:
-1. Custom User Model: both auth.User and core.User (my custom user model) try to create the same reverse accessors (user_set), leading to a conflict.
-- Solution: to avoid these conflicts, I provided unique related_name attributes for the groups and user_permissions fields in my custom User model.
+ Throughout the development process, several bugs were encountered and resolved. Below is a list of notable bugs and their resolutions:
 
-2. RichTextField was not rendering correctly in the Django admin panel.
-- Solution: switching to TextField resolved your issue by avoiding the custom handling and sanitization mechanisms of SummernoteTextField. This change allowed for more predictable and direct handling of HTML content, reducing the risk of unwanted alterations and escaping. By manually controlling sanitization and rendering, you ensure that the content is stored and displayed as intended.
+### Resolved bugs:
+#### Custom User Model: both auth.User and core.User (my custom user model) try to create the same reverse accessors (user_set), leading to a conflict.
+#### Solution: to avoid these conflicts, I provided unique related_name attributes for the groups and user_permissions fields in my custom User model.
 
-3. Lexicographical ordering: the default behavior for string sorting. When sorting strings, "10" comes after "1" because "1" is compared first and it appears before "10" lexicographically.
-- Solution: implemented natural sorting, which sorts numbers within strings as numerical values rather than strings  
+#### RichTextField was not rendering correctly in the Django admin panel.
+#### Solution: switching to TextField resolved your issue by avoiding the custom handling and sanitization mechanisms of SummernoteTextField. This change allowed for more predictable and direct handling of HTML content, reducing the risk of unwanted alterations and escaping. By manually controlling sanitization and rendering, you ensure that the content is stored and displayed as intended.
 
-4. Performance issues: Heroku had a 30-second timeout for requests, and the application was taking longer to process and respond. My view query was inefficient, the view section_list fetched sections and then for each section, it fetched subsections in a loop. This caused N+1 query problems, leading to performance issues. 
-- Solution: used select_related or prefetch_related to optimize database queries and reduce the number of queries executed.
+#### Lexicographical ordering: the default behavior for string sorting. When sorting strings, "10" comes after "1" because "1" is compared first and it appears before "10" lexicographically.
+#### Solution: implemented natural sorting, which sorts numbers within strings as numerical values rather than strings  
 
-## Some bugs are still being worked on:
-1. the images contained in figure elements do not always behave as desired. CSS, HTML and the actual images themselves will be reproduced for optimal web display.
+#### Performance issues: Heroku had a 30-second timeout for requests, and the application was taking longer to process and respond. My view query was inefficient, the view section_list fetched sections and then for each section, it fetched subsections in a loop. This caused N+1 query problems, leading to performance issues. 
+#### Solution: used select_related or prefetch_related to optimize database queries and reduce the number of queries executed.
+
+### Some bugs are still being worked on:
+####the images contained in figure elements do not always behave as desired. CSS, HTML and the actual images themselves will be reproduced for optimal web display.
 
 
 [Back to Table of Contents](#table-of-contents)
