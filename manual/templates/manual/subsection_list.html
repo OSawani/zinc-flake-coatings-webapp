@@ -1,9 +1,0 @@
-{% load static %}
-{% load custom_filters %}
-<ul class="list-group">
-    {% for subsection in subsections %}
-        <li class="list-group-item">
-            <a href="{% url 'section_detail_accordion' subsection.section.id %}#subsection-{{ subsection.id }}">{{ subsection.title }}</a>
-        </li>
-    {% endfor %}
-</ul>
