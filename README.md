@@ -99,13 +99,59 @@ This application ensures that the transformation of the ZN-FL based products app
 Epics, user stories, and acceptance criteria are written following agile development practices.
 This structure helps in organising the development process, ensuring all user needs and business objectives are met systemtically. 
 
-- __User Account Management__
-- __Content Management System__
-- __Search Functinality__
-- __User Interaction and Feedback__
-- __User Engagement and Personalisation__
-- __Accessibility and Compliance__
-- __Multimedia Content Integration__
+This document outlines the Epics, User Stories, and Tasks defined for our GitHub Projects board.
+
+## Epic 1: User Authentication and Registration
+### User Story 1.1: User Registration
+- **Task 1.1.1:** Create user registration form
+- **Task 1.1.2:** Implement email confirmation upon registration
+- **Task 1.1.3:** Admin panel for managing companies
+- **Task 1.1.4:** Admin approves/rejects user accounts
+- **Task 1.1.5:** Send email notifications for account approval
+
+### User Story 1.2: User Login
+- **Task 1.2.1:** Create login form
+- **Task 1.2.2:** Display login status in the UI
+
+### User Story 1.3: Password Reset
+- **Task 1.3.1:** Implement password reset functionality using Django's built-in auth
+- **Task 1.3.2:** Send password reset email with link
+
+## Epic 2: Community Features and User Engagement
+### User Story 2.1: Commenting System
+- **Task 2.1.1:** Implement comment form and display comments
+- **Task 2.1.2:** Allow users to edit/delete their comments
+- **Task 2.1.3:** Automatic comment approval and future admin moderation
+
+### User Story 2.2: Thumbs Up and Favorites
+- **Task 2.2.1:** Implement thumbs up feature
+- **Task 2.2.2:** Save liked content to user favorites
+- **Task 2.2.3:** Remove thumbs up and from favorites
+
+## Epic 3: Content Management and Version Control
+### User Story 3.1: Content Editing and Deletion
+- **Task 3.1.1:** Implement content editing functionality
+- **Task 3.1.2:** Implement content deletion functionality
+- **Task 3.1.3:** Save changes and manage drafts
+
+### User Story 3.2: Version Control
+- **Task 3.2.1:** Implement version control for content
+- **Task 3.2.2:** Display version history and compare changes
+- **Task 3.2.3:** Notify users about new versions
+
+## Epic 4: Notifications and Alerts
+### User Story 4.1: Account Approval Notifications
+- **Task 4.1.1:** Send email notifications for account approval
+
+### User Story 4.2: Content Update Notifications
+- **Task 4.2.1:** Send email notifications for content updates
+- **Task 4.2.2:** Link to version-specific update page
+
+## Epic 5: Search Functionality
+### User Story 5.1: Search Content
+- **Task 5.1.1:** Implement search bar
+- **Task 5.1.2:** Display search results grouped by chapters
+- **Task 5.1.3:** Highlight matched keywords in results
 
 The development of the web app is user-focused, prioritising ease of access, interaction, and continuous improvement based on user feedback. 
 
@@ -115,22 +161,49 @@ The development of the web app is user-focused, prioritising ease of access, int
 ## Design
 
 - __Design Choices__
-    - Simple, text-based interface for easy navigation.
-    - Clear and concise instructions for user guidance.
-    - Strategic use of colors to enhance user experience.
+    - The corporate design colour scheme of Zinc Flake Coatings was used as the primary colour palette for the website.
 
-- __Flowchart__
-    - The game flow was planned with a detailed flowchart, ensuring a logical progression and a smooth user experience. The first screenshot illustrates the navigation logic and the main menu loop.
+- __Typography__
+    - The website uses the Roboto font family for a clean and modern look, ensuring readability across different devices and screen sizes.
 
-    - The second screenshot illustrates the game loop. 
+- __Wireframes__
+    - The wireframes were created using Figma to visualise the layout and structure of the website, including the home page, manual sections, and user profile.
+
+
 
 [Back to Table of Contents](#table-of-contents)
 
 ## Features
 
-#### Welcome screen
+#### Home Screen
+The main entry point of the application providing an overview of the website's purpose and quick access to various sections.
+![Home Screen](docs/home_screen_screenshot.png)
 
-- Users are greeted with the game name and instructions on how to start.
+
+#### About Screen
+A dedicated page that gives detailed information about the website, its creators, and its mission.
+![About Screen](docs/about_screen_screenshot.png)
+
+
+#### Manual Screen
+Displays the comprehensive manual content, organized into sections and subsections for easy navigation with the ability to add to favourites.
+![Manual Screen](docs/manual_screen_screenshot.png)
+
+
+#### Section Details Screen
+Shows detailed information about a specific section, including content, comments, and related subsections.
+![Section Details Screen](docs/section_details_screen_screenshot.png)
+
+
+#### Responsive Design Example
+Illustrates how the website adjusts seamlessly to different screen sizes and devices, ensuring a consistent user experience.
+![Responsive Design Example](docs/responsive_design_screenshot.png)
+
+
+#### Search Functionality
+Allows users to quickly find specific content within the manual by entering keywords or phrases.
+![Search Functionality](docs/search_functionality_screenshot.png)
+
 
 
 [Back to Table of Contents](#table-of-contents)
@@ -138,14 +211,94 @@ The development of the web app is user-focused, prioritising ease of access, int
 ### __Technologies Used__
 
 - Python: The primary language for game development.
+- Bootstrap & Django: Used for the front-end design and back-end development.
 - GitHub: Used to store and manage the project's code.
-- Gitpod/VSCode: The integrated development environment for coding and version control.
+- PyCharm: The integrated development environment for coding and version control.
 - Git: Employed for version control via the VSCode terminal.
 - Heroku: Platform for deploying and managing the application.
 
 [Back to Table of Contents](#table-of-contents)
 
 ## Testing
+
+#### Automated Testing
+
+This project includes a comprehensive suite of automated and manual tests to ensure the website’s functionality, usability, and responsiveness. Below is a summary of the implemented tests and their purpose.
+
+##### Test Suite
+
+###### Form Tests
+
+- **CommentForm Tests**: Validate the content field of the comment form.
+  - `test_form_is_valid`: Ensures that the form is valid with correct data.
+  - `test_form_is_invalid`: Ensures that the form is invalid with empty data.
+
+###### Views Tests
+
+- **TestInteractionsViews**: Test views related to comments on sections.
+  - `setUp`: Sets up a test user, company, section, and mock email verification.
+  - `test_add_comment_to_section`: Tests adding a comment to a section.
+  - `test_edit_comment`: Tests editing a comment on a section.
+  - `test_delete_comment`: Tests deleting a comment from a section.
+
+###### Testing Procedures
+
+1. **Setup**: Each test case sets up the necessary data, including creating a test user with a verified email and a test section for comments.
+2. **Execution**: The tests simulate user actions such as adding, editing, and deleting comments through the corresponding views.
+3. **Validation**: After performing the actions, the tests validate the expected outcomes using assertions to ensure data integrity and correct application behavior.
+
+###### Running Tests
+
+To run the tests, use the following command:
+
+```sh
+python manage.py test --keepdb
+```
+###### Results
+1. Form validations are enforced as expected.
+2. Users can add, edit, and delete comments on sections if they are verified and approved.
+3. The application handles user authentication and permissions properly for comment-related actions.
+
+#### Manual Testing
+
+##### Manual Test Procedures with Expected and Actual Outcomes
+###### Functionality
+1. User Registration and Login:
+New users can register with valid details and receive verification emails.
+Users can log in with valid credentials.
+
+2. Email Verification:
+Email verification process by registering a new user and following the verification link sent via email works.
+Unverified users cannot add comments.
+
+3. User Approval:
+Users need admin approval to add comments.
+Admin interface approves users and ensure the status updates correctly.
+
+###### Usability
+1. Navigation:
+Manually navigating through the website ensures all links and buttons work correctly.
+Responsiveness of the navigation menu on different devices and screen sizes is tested.
+
+2. Form Interactions:
+All forms tested for proper input validation and error handling.
+Form submissions provide appropriate success and error messages.
+
+###### Responsiveness
+1. Responsive Design:
+Manually resizing the browser window ensures the layout on different screen sizes (mobile, tablet, desktop) scales.
+Using browser developer tools to simulate different device viewports ensures the UI adjusts correctly.
+
+2. Cross-Browser Compatibility:
+Tested the website on multiple browsers (Chrome, Firefox, Edge) to ensure consistent behavior and appearance.
+
+###### Data Management
+1. Database Integrity:
+Verified that data is correctly saved to the database by performing actions like adding, editing, and deleting comments, and then checking the database records.
+Ensured that deleting a user cascades correctly and associated data (like comments) is handled properly.
+
+2. Error Handling:
+Manually triggered errors (e.g., invalid form submissions, unauthorized actions) to verify that the application handles them gracefully, providing user-friendly error messages.
 
 #### Python Validation 
 
@@ -156,49 +309,36 @@ The development of the web app is user-focused, prioritising ease of access, int
 - **Cause:** Lines exceeding the maximum recommended length of 79 characters, affecting readability.
 - **Solution:** Broke long lines into shorter ones using parentheses, line continuation character `\`, and reformatting.
 
-- Errors before fixing
+#### HTML Validation 
 
-- All five modules: run.py, gameboard.py, ship.py, utils.py, and leaderboard.py after addressing the issues above, the code is now more standardized, readable, and maintainable, adhering to Python's PEP8 styling guide.
+#### CSS Validation 
 
-#### Validation Error-based Fixes
-- Navigation menu validation, welcome screen
+#### JS Validation 
 
-- Navigation menu validation, game rules screen
-
-- Navigation menu validation, change difficulty screen
-
-- Game loop validation, out of range coordinates
-
-- Game loop validation, invalid input format
-
+#### Lighthouse Report 
 
 [Back to Table of Contents](#table-of-contents)
 
-## Manual Testing
-
-| Section Tested | Input To Validate | Expected Outcome | Actual Outcome | Pass/Fail |
-| -------------- | ----------------- | ---------------- | -------------- | --------- |
-| Welcome screen | Name Entry        | Acceptance of alphanumeric characters for the player name | As expected | Pass      |
-| Gameplay       | Coordinate Input  | Acceptance of valid board coordinates with appropriate action (hit/miss) | As expected | Pass      |
-| Game Over      | N/A               | Display of the final game state and options to play again or quit | As expected | Pass      |
-| Leaderboard    | N/A               | Accurate reflection of wins and losses | As expected | Pass      |
 
 [Back to Table of Contents](#table-of-contents)
 
 ## Bugs
 - Throughout the development process, several bugs were encountered and resolved. Below is a list of notable bugs and their resolutions:
+- Resolved bugs:
+1. Custom User Model: both auth.User and core.User (my custom user model) try to create the same reverse accessors (user_set), leading to a conflict.
+- Solution: to avoid these conflicts, I provided unique related_name attributes for the groups and user_permissions fields in my custom User model.
 
-| Bug | Fix |
-| --- | --- |
-| Multiple hits on the same ship coordinate | Adjusted `take_shot` method to flag coordinates that have already been hit |
-| Incorrect leaderboard update | Corrected logic in the `update_score` method to properly increment wins and losses |
-| Game prematurely ending | Ensured that the game checks for all ships being sunk before declaring the game over |
+2. RichTextField was not rendering correctly in the Django admin panel.
+- Solution: switching to TextField resolved your issue by avoiding the custom handling and sanitization mechanisms of SummernoteTextField. This change allowed for more predictable and direct handling of HTML content, reducing the risk of unwanted alterations and escaping. By manually controlling sanitization and rendering, you ensure that the content is stored and displayed as intended.
 
-- Some bugs are still being worked on:
+3. Lexicographical ordering: the default behavior for string sorting. When sorting strings, "10" comes after "1" because "1" is compared first and it appears before "10" lexicographically.
+- Solution: implemented natural sorting, which sorts numbers within strings as numerical values rather than strings  
 
-| Bug | Status |
-| --- | ------ |
-| Game speed inconsistency | In progress - adjusting typing effect speeds |
+4. Performance issues: Heroku had a 30-second timeout for requests, and the application was taking longer to process and respond. My view query was inefficient, the view section_list fetched sections and then for each section, it fetched subsections in a loop. This caused N+1 query problems, leading to performance issues. 
+- Solution: used select_related or prefetch_related to optimize database queries and reduce the number of queries executed.
+
+## Some bugs are still being worked on:
+1. the images contained in figure elements do not always behave as desired. CSS, HTML and the actual images themselves will be reproduced for optimal web display.
 
 
 [Back to Table of Contents](#table-of-contents)
@@ -207,8 +347,8 @@ The development of the web app is user-focused, prioritising ease of access, int
 
 ### Version Control
 
-- The Battleship game was developed using Visual Studio Code and version controlled via Git and GitHub.
-- I used Visual Studio code editor to create my site and pushed to GitHub to the remote repository.
+- The app was developed using Pycharm and version controlled via Git and GitHub.
+- I used Pycharm editor to create my site and pushed to GitHub to the remote repository.
 - The following git commands were used in development to push code to the remote repo:
 - git add - This command was used to add the file(s) to the staging area before they are committed.
 - git commit -m “commit message” - This command was used to commit changes to the local repository queue ready for the final step.
@@ -216,32 +356,109 @@ The development of the web app is user-focused, prioritising ease of access, int
 
 ### Deployment
 
+#### Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+- You have Python installed. [Download Python](https://www.python.org/downloads/)
+- You have Git installed. [Download Git](https://git-scm.com/downloads)
+- You have an account on Heroku. [Sign up for Heroku](https://signup.heroku.com/)
+
+
+#### Project Dependencies
+
+The following dependencies are required for the project:
+- asgiref==3.8.1
+- bleach==3.3.0
+- dj-database-url==2.2.0
+- Django==5.0.6
+- django-allauth==0.63.3
+- django-summernote==0.8.20.0
+- gunicorn==22.0.0
+- packaging==24.0
+- psycopg2==2.9.9
+- six==1.16.0
+- sqlparse==0.5.0
+- typing_extensions==4.12.1
+- tzdata==2024.1
+- webencodings==0.5.1
+- whitenoise==6.6.0
+
+#### Deployment Steps
+
+#####  1. Clone the Repository
+
+First, clone the repository to your local machine using Git.
+
+```sh
+git clone https://github.com/OSawani/zinc-flake-coatings-webapp.git
+cd your-repository
+```
+
+##### 2. Create a Virtual Environment
+
+Create and activate a virtual environment for the project.
+
+```sh
+python -m venv env
+source env/bin/activate  # On Windows, use `env\Scripts\activate`
+```
+
+##### 3. Install Dependencies
+
+Install the project dependencies listed in the requirements.txt file.
+
+```sh
+pip install -r requirements.txt
+```
+
+##### 4. Set Up Environment Variables
+
+Create a .env file in the root directory of the project and add the necessary environment variables.
+
+```sh
+cp .env.example .env
+```
+
+##### 5. Run Application Locally
+
+Run the Django development server to test the application locally.
+
+```sh
+python manage.py migrate
+python manage.py collectstatic
+python manage.py runserver
+```
+
+##### 6. Create a Heroku App and deploy there or elsewhere
+
+- The Zinc Flake application was developed using Django and deployed on Heroku.
+- The following steps were taken to deploy the application:
+- The application was developed locally using the Django framework.
+- The application was tested locally to ensure all features and functionalities worked as expected.
+- The application was linked to a GitHub repository for version control and deployment.
+- The application was configured to use a PostgreSQL database for data storage.
+- The application was configured to use the Django Heroku package for deployment.
+- The application was configured to use the Gunicorn web server for production.
+- The application was configured to use the Whitenoise package for static file serving.
+- The application was configured to use the dj-database-url package for database configuration.
+- The application was configured to use the psycopg2 package for PostgreSQL database support.
+- The application was configured to use the dj-email-url package for email configuration.
+- The application will be moved to the Azure cloud platform for deployment when it goes in production in November 2024.
 - The application was deployed to Heroku, making it accessible to users online.
-- The Battleship game, being a command-line application, is hosted on Heroku, allowing users to play it directly from their browsers.
 - Deploying on Heroku:
 - A Procfile and requirements.txt file were created to specify the commands that are executed by the app on startup.
+- A requirements.txt file was generated to list all the dependencies required by the app.
 - The app was linked to the GitHub repository for automatic deployment upon updates to the main branch.
-- The live link to play the game is available here: 
-Live link - [Battleship](https://python-project-bs-game-0c8cb15b2dbe.herokuapp.com/)
+- The live link to interact with the app is available here: 
+Live link - [flZn Application Manual](https://znfl-coatings-manual-c99fa7fb2727.herokuapp.com/)
 
-### Clone a repository code locally
-
-- Step-by-step guide on how to clone the repository locally.
-- To clone the Battleship repository code to your local machine:
-- Access the repository URL of the remote repository you want to clone.
-- Click on the green 'Code' button.
-- Under 'HTTPS', copy the repository link.
-- In your IDE, open the terminal.
-- Paste the repository link into the terminal.
-- Git will download all the files from the remote repository to your local machine. Once the process is finished, you'll have a local copy of the repository.
 
 [Back to Table of Contents](#table-of-contents)
 
 ### Forking in GitHub
 
 - Instructions on how to fork the repository for personal modification and contribution:
-- Go to the GitHub repository: 
-[Battleship Repository](https://github.com/OSawani/python-project-3).
+- Go to the GitHub repository:
 - Click the 'Fork' button on the top right corner of the repository page.
 - You will be redirected to your fork of the repository. This version is a copy of the original.
 - You can now make changes, add features, fix issues, or modify the code within your fork. 
@@ -254,9 +471,6 @@ Live link - [Battleship](https://python-project-bs-game-0c8cb15b2dbe.herokuapp.c
 ## Credits
 Thanks to my mentor Medale Oluwafemi for his guidance and support. 
 
-### Design
-
-- Design inspired by 
 
 ## Acknowledgements
 

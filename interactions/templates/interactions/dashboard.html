@@ -5,17 +5,17 @@
     <!-- Welcome Message -->
     <div class="row">
         <div class="col-12 text-center"> <!-- Full-width and centered text -->
-            <h2>Welcome, {{ user.first_name }}</h2>
-            <p>Here you can manage your favourites, comments, and browse content.</p>
+            <h2>Hallo, {{ user.first_name }}</h2>
+            <p>Hier können Sie Ihre Favoriten und Kommentare verwalten und Inhalte durchsuchen.</p>
         </div>
     </div>
     <div class="row">
         <!-- Navigation Sidebar -->
         <div class="col-md-3 mb-4 mb-md-0">
             <ul class="list-group">
-                <li class="list-group-item"><a href="#" data-bs-toggle="modal" data-bs-target="#manualIndexModal">Manual Index</a></li>
-                <li class="list-group-item"><a href="#favourites">My Favourites</a></li>
-                <li class="list-group-item"><a href="#comments">My Comments</a></li>
+                <li class="list-group-item"><a href="#" data-bs-toggle="modal" data-bs-target="#manualIndexModal">Handbuch Verzeichnis</a></li>
+                <li class="list-group-item"><a href="#favourites">Meine Favoriten</a></li>
+                <li class="list-group-item"><a href="#comments">Meine Kommentare</a></li>
             </ul>
         </div>
 
@@ -24,14 +24,14 @@
 
             <!-- Favourites Section -->
             <div id="favourites" class="section mt-8">
-                <h3>My Favourites</h3>
+                <h3>Meine Favoriten</h3>
                 {% if favourite_sections or favourite_subsections %}
                     <div class="accordion" id="favouritesAccordion">
                         {% if favourite_sections %}
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingSections">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSections" aria-expanded="true" aria-controls="collapseSections">
-                                    Favourite Sections
+                                    Favorisierte Kapitel
                                 </button>
                             </h2>
                             <div id="collapseSections" class="accordion-collapse collapse show" aria-labelledby="headingSections" data-bs-parent="#favouritesAccordion">
@@ -49,7 +49,7 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingSubsections">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubsections" aria-expanded="false" aria-controls="collapseSubsections">
-                                    Favourite Subsections
+                                    Favorisierte Unterkapitel
                                 </button>
                             </h2>
                             <div id="collapseSubsections" class="accordion-collapse collapse" aria-labelledby="headingSubsections" data-bs-parent="#favouritesAccordion">
@@ -75,15 +75,15 @@
 
             <!-- Comments Section -->
             <div id="comments" class="section mt-4">
-                <h3>My Comments</h3>
+                <h3>Meine Kommentare</h3>
                 {% if comments %}
                 <ul class="list-group">
                     {% for comment in comments %}
-                    <li class="list-group-item">Comment on <a href="{{ comment.subsection.get_absolute_url }}">{{ comment.subsection.title }}</a>: "{{ comment.content }}"</li>
+                    <li class="list-group-item">Kommentar auf <a href="{{ comment.subsection.get_absolute_url }}">{{ comment.subsection.title }}</a>: "{{ comment.content }}"</li>
                     {% endfor %}
                 </ul>
                 {% else %}
-                <p>You have no comments.</p>
+                <p>Sie haben keine Kommentare geschrieben.</p>
                 {% endif %}
             </div>
         </div>
@@ -95,7 +95,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="manualIndexModalLabel">Manual Index</h5>
+                <h5 class="modal-title" id="manualIndexModalLabel">Handbuch Verzeichnis</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

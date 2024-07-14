@@ -17,3 +17,6 @@ env.py
 
 #Ignore content of the manual
 /manual/content/
+
+#ignore doc media
+/docs/
