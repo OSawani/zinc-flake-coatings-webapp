@@ -23,6 +23,7 @@ The manual includes the following:
 - [Design](#design)
 - [Features](#features)
 - [Technologies](#technologies-used)
+- [Database Schema](#database-schema)
 - [Testing](#testing)
 - [Bugs](#bugs)
 - [Deployment](#deployment)
@@ -227,6 +228,147 @@ A user dashboard displaying user-specific information, including favourites, com
 - Heroku: Platform for deploying and managing the application.
 
 [Back to Table of Contents](#table-of-contents)
+
+### __Database Schema__
+
+The project consists of three apps: core, manual, and interactions. Each app contains several models that define the data schema. Below is a comprehensive description of each model, including their fields, relationships, cascading behaviors, constraints, and triggers.
+
+Core Models
+1. Company
+The Company model represents a company with a unique name.
+
+Fields:
+name (CharField): The name of the company (max_length=255, unique=True).
+created_at (DateTimeField): The date and time when the company was created (auto_now_add=True).
+updated_at (DateTimeField): The date and time when the company was last updated (auto_now=True).
+Relationships:
+One-to-Many with User (related_name='employees'): A company can have many employees.
+2. User
+The User model extends the default Django AbstractUser model, using email as the username field and including additional fields.
+
+Fields:
+first_name (CharField): The first name of the user (max_length=100).
+last_name (CharField): The last name of the user (max_length=100).
+email (EmailField): The unique email address of the user (unique=True).
+is_approved (BooleanField): The approval status of the user (default=False).
+company (ForeignKey to Company): The company to which the user belongs (on_delete=models.SET_NULL, null=True, blank=True, related_name='employees').
+created_at (DateTimeField): The date and time when the user was created (auto_now_add=True).
+updated_at (DateTimeField): The date and time when the user was last updated (auto_now=True).
+groups (ManyToManyField to auth.Group): The groups this user belongs to (related_name='custom_user_set', blank=True).
+user_permissions (ManyToManyField to auth.Permission): Specific permissions for this user (related_name='custom_user_permissions_set', blank=True).
+Relationships:
+Many-to-One with Company (related_name='employees'): Many users can belong to one company.
+Many-to-Many with auth.Group (related_name='custom_user_set'): A user can belong to many groups.
+Many-to-Many with auth.Permission (related_name='custom_user_permissions_set'): A user can have many permissions.
+Triggers:
+send_approval_email(): Sends an approval email to the user notifying them that their account has been approved.
+Manual Models
+1. Section
+The Section model represents a section with a title, description, author, and timestamps.
+
+Fields:
+title (CharField): The title of the section (max_length=255).
+description (TextField): The description of the section (null=True, blank=True).
+author (ForeignKey to core.User): The author of the section (on_delete=models.SET_NULL, null=True, blank=True, related_name='sections').
+created_at (DateTimeField): The date and time when the section was created (auto_now_add=True).
+updated_at (DateTimeField): The date and time when the section was last updated (auto_now=True).
+css_path (CharField): The path to the CSS file for the section (null=True, blank=True).
+Relationships:
+One-to-Many with Subsection (related_name='sub_sections', on_delete=models.CASCADE): A section can have many subsections.
+One-to-Many with ContentVersion (related_name='versions', on_delete=models.CASCADE): A section can have many content versions.
+One-to-Many with Comment (related_name='comments', on_delete=models.CASCADE): A section can have many comments.
+Many-to-Many with Favourite (related_name='favourites'): A section can be favourited by many users.
+Constraints:
+Unique constraint on title.
+2. Subsection
+The Subsection model represents a subsection within a section, with a possible parent subsection, author, title, content, and timestamps.
+
+Fields:
+section (ForeignKey to Section): The section to which this subsection belongs (on_delete=models.CASCADE, related_name='sub_sections').
+parent (ForeignKey to self): The parent subsection of this subsection (null=True, blank=True, on_delete=models.CASCADE, related_name='sub_sections').
+author (ForeignKey to core.User): The author of the subsection (on_delete=models.SET_NULL, null=True, blank=True, related_name='sub_sections').
+title (CharField): The title of the subsection (max_length=255).
+content (TextField): The content of the subsection (null=True, blank=True).
+created_at (DateTimeField): The date and time when the subsection was created (auto_now_add=True).
+updated_at (DateTimeField): The date and time when the subsection was last updated (auto_now=True).
+Relationships:
+Many-to-One with Section (related_name='sub_sections'): Many subsections can belong to one section.
+Many-to-One with self (related_name='sub_sections'): Many subsections can have a parent subsection.
+One-to-Many with ContentVersion (related_name='versions', on_delete=models.CASCADE): A subsection can have many content versions.
+One-to-Many with Comment (related_name='comments', on_delete=models.CASCADE): A subsection can have many comments.
+Many-to-Many with Favourite (related_name='favourites'): A subsection can be favourited by many users.
+Constraints:
+Unique constraint on title within the same section.
+Triggers:
+save(): Cleans HTML content before saving the subsection.
+3. ContentVersion
+The ContentVersion model represents a version of content within a subsection, including the version number, content, author, and timestamps.
+
+Fields:
+subsection (ForeignKey to Subsection): The subsection to which this version belongs (on_delete=models.CASCADE, related_name='versions').
+section (ForeignKey to Section): The section to which this version belongs (on_delete=models.CASCADE, null=True, blank=True, related_name='versions').
+version_number (IntegerField): The version number of the content.
+content (TextField): The content of the version.
+author (ForeignKey to core.User): The author of the content version (on_delete=models.SET_NULL, null=True, blank=True, related_name='published_versions').
+created_at (DateTimeField): The date and time when the content version was created (auto_now_add=True).
+updated_at (DateTimeField): The date and time when the content version was last updated (auto_now=True).
+Relationships:
+Many-to-One with Subsection (related_name='versions'): Many content versions can belong to one subsection.
+Many-to-One with Section (related_name='versions'): Many content versions can belong to one section.
+Constraints:
+Unique constraint on version_number within the same subsection.
+Interactions Models
+1. Comment
+The Comment model represents a comment made by a user on a section or subsection, including the content, approval status, and timestamps.
+
+Fields:
+user (ForeignKey to core.User): The user who made the comment (on_delete=models.CASCADE).
+section (ForeignKey to manual.Section): The section the comment is related to (on_delete=models.CASCADE, null=True, blank=True, related_name='comments').
+subsection (ForeignKey to manual.Subsection): The subsection the comment is related to (on_delete=models.CASCADE, null=True, blank=True, related_name='comments').
+content (TextField): The content of the comment.
+approved (BooleanField): The approval status of the comment (default=True).
+created_at (DateTimeField): The date and time when the comment was created (auto_now_add=True).
+updated_at (DateTimeField): The date and time when the comment was last updated (auto_now=True).
+Relationships:
+Many-to-One with User (related_name='comments'): Many comments can be made by one user.
+Many-to-One with Section (related_name='comments'): Many comments can be related to one section.
+Many-to-One with Subsection (related_name='comments'): Many comments can be related to one subsection.
+Constraints:
+None.
+2. Favourite
+The Favourite model represents a user's favourite section or subsection, including timestamps.
+
+Fields:
+user (ForeignKey to core.User): The user who favourited the section or subsection (on_delete=models.CASCADE, related_name='favourites').
+section (ForeignKey to manual.Section): The section that was favourited (null=True, blank=True, on_delete=models.CASCADE, related_name='favourites').
+subsection (ForeignKey to manual.Subsection): The subsection that was favourited (null=True, blank=True, on_delete=models.CASCADE, related_name='favourites').
+created_at (DateTimeField): The date and time when the favourite was created (auto_now_add=True).
+updated_at (DateTimeField): The date and time when the favourite was last updated (auto_now=True).
+Relationships:
+Many-to-One with User (related_name='favourites'): Many favourites can be created by one user.
+Many-to-One with Section (related_name='favourites'): Many favourites can be related to one section.
+Many-to-One with Subsection (related_name='favourites'): Many favourites can be related to one subsection.
+Constraints:
+Unique constraint on the combination of user and section.
+Unique constraint on the combination of user and subsection.
+3. Notification
+The Notification model represents a notification sent to a user, including the type, message, send status, and timestamps.
+
+Fields:
+user (ForeignKey to core.User): The user who receives the notification (on_delete=models.CASCADE, related_name='notifications').
+type (CharField): The type of notification (max_length=100).
+message (TextField): The message content of the notification.
+sent (BooleanField): The send status of the notification (default=False).
+created_at (DateTimeField): The date and time when the notification was created (auto_now_add=True).
+updated_at (DateTimeField): The date and time when the notification was last updated (auto_now=True).
+Relationships:
+Many-to-One with User (related_name='notifications'): Many notifications can be sent to one user.
+Constraints:
+None.
+
+[Back to Table of Contents](#table-ofcontents)
+
+
 
 ## Testing
 
