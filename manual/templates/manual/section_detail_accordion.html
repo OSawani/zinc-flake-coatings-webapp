@@ -100,7 +100,7 @@
                     <strong>{{ comment.user.first_name }}</strong>: {{ comment.content }} - on {{ comment.created_at }}
                     {% if user == comment.user %}
                         <div class="btn-group float-end" role="group">
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="openEditModal('{{ comment.id }}', '{{ comment.content|escapejs }}')">Edit</button>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="openEditModal('{{ comment.id }}', '{{ comment.content|escapejs }}')">Bearbeiten</button>
                             <button type="button" class="btn btn-danger btn-sm" onclick="openDeleteModal('{{ comment.id }}')">Löschen</button>
                         </div>
                     {% endif %}
