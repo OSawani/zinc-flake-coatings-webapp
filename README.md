@@ -3,9 +3,11 @@ Welcome to,
 
 # Application Manual - Zinc Flake
 
-Live link - 
+Live link - [flZn Application Manual](https://znfl-coatings-manual-c99fa7fb2727.herokuapp.com/)
 
 ![Screenshot]
+
+Homepage - [Screenshot](docs/app_screenshots/homepage_desktop.png)
 
 ## Introduction
 
@@ -101,6 +103,8 @@ This structure helps in organising the development process, ensuring all user ne
 
 This document outlines the Epics, User Stories, and Tasks defined for our GitHub Projects board.
 
+Board Link: [GitHub Projects Board](https://github.com/users/OSawani/projects/4)
+
 ## Epic 1: User Authentication and Registration
 ### User Story 1.1: User Registration
 - **Task 1.1.1:** Create user registration form
@@ -177,32 +181,37 @@ The development of the web app is user-focused, prioritising ease of access, int
 
 #### Home Screen
 The main entry point of the application providing an overview of the website's purpose and quick access to various sections.
-![Home Screen](docs/home_screen_screenshot.png)
+![Home Screen](docs/app_screenshots/homepage_desktop.png)
 
 
 #### About Screen
 A dedicated page that gives detailed information about the website, its creators, and its mission.
-![About Screen](docs/about_screen_screenshot.png)
+![About Screen](docs/app_screenshots/about_page_desktop.png)
 
 
 #### Manual Screen
 Displays the comprehensive manual content, organized into sections and subsections for easy navigation with the ability to add to favourites.
-![Manual Screen](docs/manual_screen_screenshot.png)
+![Manual Screen](docs/app_screenshots/manual_logged_in_desktop.png)
 
 
 #### Section Details Screen
 Shows detailed information about a specific section, including content, comments, and related subsections.
-![Section Details Screen](docs/section_details_screen_screenshot.png)
+![Section Details Screen](docs/app_screenshots/section_details_logged_in_comments_desktop.png)
 
 
 #### Responsive Design Example
 Illustrates how the website adjusts seamlessly to different screen sizes and devices, ensuring a consistent user experience.
-![Responsive Design Example](docs/responsive_design_screenshot.png)
+![Responsive Design Example](docs/app_screenshots/responsive_math_formula_desktop.png)
+![Responsive Design Example](docs/app_screenshots/responsive_tables_figures.png)
 
 
 #### Search Functionality
 Allows users to quickly find specific content within the manual by entering keywords or phrases.
-![Search Functionality](docs/search_functionality_screenshot.png)
+![Search Functionality](docs/app_screenshots/search_desktop.png)
+
+#### Dashboard
+A user dashboard displaying user-specific information, including favourites, comments.
+![Dashboard](docs/app_screenshots/dashboard_logged_in_desktop.png)
 
 
 
@@ -259,6 +268,8 @@ python manage.py test --keepdb
 2. Users can add, edit, and delete comments on sections if they are verified and approved.
 3. The application handles user authentication and permissions properly for comment-related actions.
 
+Screenshot of the test results: [Test Results](docs/automated_tests/test_run_pycharm_terminal.png)
+
 #### Manual Testing
 
 ##### Manual Test Procedures with Expected and Actual Outcomes
@@ -305,17 +316,38 @@ Manually triggered errors (e.g., invalid form submissions, unauthorized actions)
 - All Python modules were thoroughly tested and validated using CI Python linters to ensure code quality and adherence to Pythonic conventions PEP8.
 - Errors were all related to four main issues, trailing white spaces, line length, indentation levels and spaces around keyword/parameter "="
 
+Screenshots:
+
+[Core app, models](docs/python_ci_linter/core_models.png)
+[Core app, views](docs/python_ci_linter/core_views.png)
+[Interactions app, models](docs/python_ci_linter/interactions_models.png)
+[Interactions app, views](docs/python_ci_linter/interactions_views.png)
+[Manual app, models](docs/python_ci_linter/manual_models.png)
+[Manual app, views](docs/python_ci_linter/manual_views.png)
+
 ##### E501 line too long (117 > 79 characters)
 - **Cause:** Lines exceeding the maximum recommended length of 79 characters, affecting readability.
 - **Solution:** Broke long lines into shorter ones using parentheses, line continuation character `\`, and reformatting.
 
 #### HTML Validation 
+Screenshot:
+[HTML Validation by URL](docs/html_validator/project_html_url.png)
+[HTML Validation by source code](docs/html_validator/project_logged_in_source.png)
+
 
 #### CSS Validation 
+Screenshot: 
+[CSS Validation](docs/css_validator/project_css.png)
 
 #### JS Validation 
+Screenshot:
+[JS Validation Comments Popup](docs/js_shint/jshint_comments_js.png)
+[JS Validation Comments Popup](docs/js_shint/jshint_section_to_list_js.png)
 
 #### Lighthouse Report 
+Screenshot:
+[Lighthouse Report](docs/lighthouse/page_1_overall_score.png)
+[Download Report](docs/lighthouse/incognito_heroku.pdf)
 
 [Back to Table of Contents](#table-of-contents)
 
