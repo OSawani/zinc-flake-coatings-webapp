@@ -1,7 +1,54 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
+from django.conf import settings
 from django.db.models import Q
 from manual.models import Section, Subsection
+from django.contrib.auth import login
+import jwt
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+from .models import User
+
+
+def sso_login_view(request):
+    """
+    This view handles the SSO login process using a JWT token. It checks for
+    a JWT token in the Authorization header, validates it using the public key,
+    and logs in the user if a matching handbuch_user_id is found in the database.
+
+    If the token is invalid, expired, or no matching user is found, the user is
+    redirected to the homepage.
+    """
+    # Check if the Authorization header is present
+    auth_header = request.headers.get('Authorization')
+    if not auth_header or not auth_header.startswith('Bearer '):
+        return redirect('home')  # Redirect to the homepage if no token is present
+
+    token = auth_header.split(' ')[1]
+
+    try:
+        # Decode the JWT token using the public key
+        decoded_token = jwt.decode(token, settings.SIMPLE_JWT['VERIFYING_KEY'], algorithms=['RS256'])
+        handbuch_user_id = decoded_token.get('sub')  # Extract the user ID from the token
+
+        if not handbuch_user_id:
+            return redirect('home')  # If the ID is not present, redirect to homepage
+
+        # Find the user in the Django database based on handbuch_user_id
+        try:
+            user = User.objects.get(handbuch_user_id=handbuch_user_id)
+
+            # Log the user in
+            login(request, user)
+
+            # Redirect to the homepage after successful login
+            return redirect('home')
+        except User.DoesNotExist:
+            # If no matching user is found, redirect to the homepage
+            return redirect('home')
+
+    except (jwt.InvalidTokenError, jwt.ExpiredSignatureError):
+        # If the token is invalid or expired, redirect to the homepage
+        return redirect('home')
 
 
 # Create your views here.

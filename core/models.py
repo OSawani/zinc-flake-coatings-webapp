@@ -58,6 +58,9 @@ class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    # Company Website ID
+    handbuch_user_id = models.IntegerField(null=True, blank=True)
+
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='custom_user_set',  # Unique related_name

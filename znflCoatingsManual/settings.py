@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
 import dj_database_url
 from django.utils.translation import gettext_lazy as _
 
@@ -42,7 +43,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', 'localhost', '188.245.194.13']
 
@@ -62,7 +63,23 @@ INSTALLED_APPS = [
     'core',
     'manual',
     'interactions',
+    'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+# JWT Configuration
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'ALGORITHM': 'RS256',  # Algorithm used to sign the token in Symfony (RS256)
+    'SIGNING_KEY': None,   # Not used for public key verification
+    'VERIFYING_KEY': open('znflCoatingsManual/public.pem').read(),  # Path to public key
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'  # for iframe support in Summernote
 
