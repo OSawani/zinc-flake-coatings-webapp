@@ -12,13 +12,13 @@ from .models import User
 def sso_login_view(request):
     """
     This view handles the SSO login process using a JWT token passed as a
-    query parameter named 'jwt'. It validates the token using the public key
-    and logs in the user if a matching handbuch_user_id is found in the database.
+    query parameter. It validates the token using the public key and logs
+    in the user if a matching handbuch_user_id is found in the database.
 
     If the token is invalid, expired, or no matching user is found, the user
     is redirected to the homepage.
     """
-    # Get the JWT token from the 'jwt' query parameter
+    # Get the JWT token from the query parameter
     token = request.GET.get('jwt')
     if not token:
         return redirect('home')  # Redirect to the homepage if no token is present
