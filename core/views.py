@@ -11,19 +11,17 @@ from .models import User
 
 def sso_login_view(request):
     """
-    This view handles the SSO login process using a JWT token. It checks for
-    a JWT token in the Authorization header, validates it using the public key,
-    and logs in the user if a matching handbuch_user_id is found in the database.
+    This view handles the SSO login process using a JWT token passed as a
+    query parameter. It validates the token using the public key and logs
+    in the user if a matching handbuch_user_id is found in the database.
 
-    If the token is invalid, expired, or no matching user is found, the user is
-    redirected to the homepage.
+    If the token is invalid, expired, or no matching user is found, the user
+    is redirected to the homepage.
     """
-    # Check if the Authorization header is present
-    auth_header = request.headers.get('Authorization')
-    if not auth_header or not auth_header.startswith('Bearer '):
+    # Get the JWT token from the query parameter
+    token = request.GET.get('token')
+    if not token:
         return redirect('home')  # Redirect to the homepage if no token is present
-
-    token = auth_header.split(' ')[1]
 
     try:
         # Decode the JWT token using the public key
