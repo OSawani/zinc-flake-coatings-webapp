@@ -78,7 +78,6 @@ SIMPLE_JWT = {
     'ALGORITHM': 'RS256',  # Algorithm used to sign the token in Symfony (RS256)
     'SIGNING_KEY': None,   # Not used for public key verification
     'VERIFYING_KEY': open('znflCoatingsManual/public.pem').read(),  # Path to public key
-    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'  # for iframe support in Summernote
