@@ -72,12 +72,13 @@ REST_FRAMEWORK = {
     )
 }
 
+# Define the path to the public key via an environment variable
+PUBLIC_KEY_PATH = os.getenv('JWT_PUBLIC_KEY_PATH', 'public.pem')
 # JWT Configuration
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'ALGORITHM': 'RS256',  # Algorithm used to sign the token in Symfony (RS256)
-    'SIGNING_KEY': None,   # Not used for public key verification
-    'VERIFYING_KEY': open('znflCoatingsManual/public.pem').read(),  # Path to public key
+    'ALGORITHM': 'RS256',    # Use RS256 for asymmetric signing with a public-private key pair
+    'VERIFYING_KEY': Path(PUBLIC_KEY_PATH).read_text(),  # Lazy load the public key once
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  # Set token expiration to 1 hour
 }
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'  # for iframe support in Summernote
@@ -284,3 +285,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'WARNING',  # Show only warnings and errors
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+}

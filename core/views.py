@@ -1,55 +1,42 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.core.paginator import Paginator
 from django.conf import settings
 from django.db.models import Q
 from manual.models import Section, Subsection
 from django.contrib.auth import login
+from django.contrib import messages
 import jwt
-from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from .models import User
-
-
 def sso_login_view(request):
-    """
-    This view handles the SSO login process using a JWT token passed as a
-    query parameter. It validates the token using the public key and logs
-    in the user if a matching handbuch_user_id is found in the database.
-
-    If the token is invalid, expired, or no matching user is found, the user
-    is redirected to the homepage.
-    """
-    # Get the JWT token from the query parameter
     token = request.GET.get('jwt')
     if not token:
-        return redirect('home')  # Redirect to the homepage if no token is present
+        return redirect(f"{reverse('home')}?error=1")
 
     try:
-        # Decode the JWT token using the public key
+        # Decode the JWT token
         decoded_token = jwt.decode(token, settings.SIMPLE_JWT['VERIFYING_KEY'], algorithms=['RS256'])
-        handbuch_user_id = decoded_token.get('sub')  # Extract the user ID from the token
+        handbook_user_id = decoded_token.get('handbook_user_id')
 
-        if not handbuch_user_id:
-            return redirect('home')  # If the ID is not present, redirect to homepage
+        if not handbook_user_id:
+            return redirect(f"{reverse('home')}?error=1")
 
-        # Find the user in the Django database based on handbuch_user_id
-        try:
-            user = User.objects.get(handbuch_user_id=handbuch_user_id)
+        # Find the user in the Django database and log in
+        user = User.objects.get(handbuch_user_id=handbook_user_id)
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        login(request, user)
 
-            # Log the user in
-            login(request, user)
-
-            # Redirect to the homepage after successful login
-            return redirect('home')
-        except User.DoesNotExist:
-            # If no matching user is found, redirect to the homepage
-            return redirect('home')
-
-    except (jwt.InvalidTokenError, jwt.ExpiredSignatureError):
-        # If the token is invalid or expired, redirect to the homepage
+        # Flash success message
+        messages.success(request, f"Erfolgreich als {user.email} angemeldet.")
         return redirect('home')
 
+    except User.DoesNotExist:
+        return redirect(f"{reverse('home')}?error=1")
+    except jwt.ExpiredSignatureError:
+        return redirect(f"{reverse('home')}?error=1")
+    except jwt.InvalidTokenError:
+        return redirect(f"{reverse('home')}?error=1")
 
-# Create your views here.
 def home(request):
     """
     High-level description:
@@ -61,6 +48,13 @@ def home(request):
     Template:
     This view returns the `core/home.html` template.
     """
+    # Redirect to sso_login_view if 'jwt' is present and no error flag
+    jwt_token = request.GET.get('jwt')
+    if jwt_token and 'error' not in request.GET:
+        # Redirect to sso_login_view, passing the jwt token as a query parameter
+        return redirect(f"{reverse('sso_login')}?jwt={jwt_token}")
+
+    # Otherwise, render the home page
     return render(request, 'core/home.html')
 
 
