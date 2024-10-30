@@ -46,8 +46,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', 'localhost',
-                 '188.245.194.13', 'znfl-handbuch.doerken.com', 'www.znfl'
-                                                                '-handbuch.doerken.com']
+                 '188.245.194.13', 'znfl-handbuch.doerken.com',
+                 'www.znfl-handbuch.doerken.com', 'doerken.com',]
 
 # Application definition
 
